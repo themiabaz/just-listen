@@ -11,6 +11,7 @@ function Home() {
         </p>
         <p>
           <em>(calculations are available in the console)</em>
+          <em>(you'll need to refresh the page every time, sorry)</em>
         </p>
       </div>
       <div>
