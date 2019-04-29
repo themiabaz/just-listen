@@ -1,11 +1,11 @@
 import React from "react";
-import { Oscillator, Form } from "./components";
+import { Home, Form } from "./components";
 
-const App = () => {
+export const App = () => {
   return (
     <div>
+      <Home />
       <Form />
-      {/* <Oscillator /> */}
     </div>
   );
 };
