@@ -127,18 +127,21 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
- // >> START << React Hooks Form Component
+ // export let keyData = {}; // see line 22
+// >> START << React Hooks Form Component
 
 function Form() {
   var _UseForm = Object(_UseForm__WEBPACK_IMPORTED_MODULE_2__["default"])(playJI),
       inputs = _UseForm.inputs,
       handleInputChange = _UseForm.handleInputChange,
-      handleSubmit = _UseForm.handleSubmit; // >> START << Oscillator Functions //
+      handleSubmit = _UseForm.handleSubmit; // >> START << Oscillator Function //
 
 
   var playJI = function playJI() {
     // takes the form inputs and performs JI calcs
-    var jiNotes = new _jiKeyCalc__WEBPACK_IMPORTED_MODULE_3__["default"](inputs.mel, [inputs.tn, inputs.ld, inputs.br, inputs.bs]); // create the PolySynth
+    var jiNotes = new _jiKeyCalc__WEBPACK_IMPORTED_MODULE_3__["default"](inputs.mel, [inputs.tn, inputs.ld, inputs.br, inputs.bs]); // poor attempt to use closure when useState wasn't lining up to pass some of the post-calculated form data to another component
+    // keyData = { mel: jiNotes.base, chord: [jiNotes.harmony] };
+    // create the PolySynth
 
     var jiChord = new tone__WEBPACK_IMPORTED_MODULE_1___default.a.PolySynth(4, tone__WEBPACK_IMPORTED_MODULE_1___default.a.Synth).toMaster(); // this puts all four voices in the PolySynth
 
@@ -148,21 +151,42 @@ function Form() {
       duration: "1n"
     }];
     var part = new tone__WEBPACK_IMPORTED_MODULE_1___default.a.Part(function (time, note) {
-      //the notes given as the second element in the array
-      //will be passed in as the second argument
       jiChord.triggerAttackRelease(note.note, note.duration, tone__WEBPACK_IMPORTED_MODULE_1___default.a.now());
-    }, music).start(0);
+    }, music).start(0); // Wow, these console.log()s straight up broke the program.
+    // I tried putting them right under the jiNotes calculation; also broke. This is probably something I don't understand about React Hooks.
+    // console.log(
+    //   `original frequencies! Tenor: `,
+    //   Tone.freq(inputs.tn),
+    //   `, lead: `,
+    //   Tone.freq(inputs.ld),
+    //   `, baritone: `,
+    //   Tone.freq(inputs.br),
+    //   `bass: `,
+    //   Tone.freq(inputs.bs)
+    // );
+    // console.log(
+    //   `new frequencies! Tenor: `,
+    //   Tone.freq(jiNotes.harmony[0]),
+    //   `, lead: `,
+    //   Tone.freq(jiNotes.harmony[0]),
+    //   `, baritone: `,
+    //   Tone.freq(jiNotes.harmony[0]),
+    //   `bass: `,
+    //   Tone.freq(jiNotes.harmony[0])
+    // );
+
     tone__WEBPACK_IMPORTED_MODULE_1___default.a.Transport.start();
-  }; // >> END << Oscillator Functions
-  // >> START << Side Effects
-  // useEffect(() => {
-  //   document.title = oogabooga;
+  }; // >> END << Oscillator Function //
+  // >> START << Side Effects //
+  // side effects takes the place of componentDidMount, willMount, willUnmount. GENIUS
+  // useEffect(() => { // placeholder
+  //   return something
   // });
   // >> END << Side Effects
-  // >> RENDER COMPONENT <<
+  // >> RENDER COMPONENT << //
 
 
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
     onSubmit: handleSubmit
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
     htmlFor: "tn"
@@ -208,9 +232,55 @@ function Form() {
     type: "submit",
     id: "JI",
     onClick: playJI
-  }, "tune!"));
+  }, "tune!")));
 }
 /* harmony default export */ __webpack_exports__["default"] = (Form);
+
+/***/ }),
+
+/***/ "./client/components/Haps.js":
+/*!***********************************!*\
+  !*** ./client/components/Haps.js ***!
+  \***********************************/
+/*! exports provided: Haps, default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Haps", function() { return Haps; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _jiKeyCalc__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./jiKeyCalc */ "./client/components/jiKeyCalc.js");
+/* harmony import */ var tonal__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tonal */ "./node_modules/tonal/index.js");
+/* harmony import */ var react_bootstrap_Table__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-bootstrap/Table */ "./node_modules/react-bootstrap/Table.js");
+/* harmony import */ var react_bootstrap_Table__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react_bootstrap_Table__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _Form__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Form */ "./client/components/Form.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+
+
+function Haps() {
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({}),
+      _useState2 = _slicedToArray(_useState, 1),
+      inputs = _useState2[0]; // >> RENDER COMPONENT <<
+
+
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap_Table__WEBPACK_IMPORTED_MODULE_3___default.a, {
+    striped: true,
+    bordered: true,
+    hover: true
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, "key note: ", inputs.mel, " = ", tonal__WEBPACK_IMPORTED_MODULE_2__["Note"].freq(inputs.mel), "Hz"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "voice part"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "original pitch (ET)"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "new pitch (JI)"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "adjustment required (ET-JI)"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "tenor"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "null"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "null"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "null")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "lead"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "null"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "null"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "null")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "bari"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "null"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "null"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "null")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "bass"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "null"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "null"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "null"))));
+}
+/* harmony default export */ __webpack_exports__["default"] = (Haps);
 
 /***/ }),
 
@@ -336,9 +406,10 @@ var useForm = function useForm(callback) {
   var handleSubmit = function handleSubmit(event) {
     if (event) {
       event.preventDefault();
-    }
+    } // this is supposed to live here, per the tutorial...but it's breaking with it!
+    // https://blog.bitsrc.io/using-react-hooks-to-create-awesome-forms-6f846a4ce57
+    // callback();
 
-    callback();
   };
 
   var handleInputChange = function handleInputChange(event) {
@@ -362,7 +433,7 @@ var useForm = function useForm(callback) {
 /*!************************************!*\
   !*** ./client/components/index.js ***!
   \************************************/
-/*! exports provided: Home, jiKeyCalc, Form, UseForm, NewForm, useNewForm, playJI */
+/*! exports provided: Home, jiKeyCalc, Form, UseForm, playJI, Haps, NewForm, useNewForm */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -379,24 +450,32 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _UseForm__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./UseForm */ "./client/components/UseForm.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "UseForm", function() { return _UseForm__WEBPACK_IMPORTED_MODULE_3__["default"]; });
 
-/* harmony import */ var _NewForm__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./NewForm */ "./client/components/NewForm.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "NewForm", function() { return _NewForm__WEBPACK_IMPORTED_MODULE_4__["default"]; });
+/* harmony import */ var _playJI__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./playJI */ "./client/components/playJI.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "playJI", function() { return _playJI__WEBPACK_IMPORTED_MODULE_4__["default"]; });
 
-/* harmony import */ var _useNewForm__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./useNewForm */ "./client/components/useNewForm.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "useNewForm", function() { return _useNewForm__WEBPACK_IMPORTED_MODULE_5__["default"]; });
+/* harmony import */ var _Haps__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Haps */ "./client/components/Haps.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Haps", function() { return _Haps__WEBPACK_IMPORTED_MODULE_5__["default"]; });
 
-/* harmony import */ var _playJI__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./playJI */ "./client/components/playJI.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "playJI", function() { return _playJI__WEBPACK_IMPORTED_MODULE_6__["default"]; });
+/* harmony import */ var _NewForm__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./NewForm */ "./client/components/NewForm.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "NewForm", function() { return _NewForm__WEBPACK_IMPORTED_MODULE_6__["default"]; });
+
+/* harmony import */ var _useNewForm__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./useNewForm */ "./client/components/useNewForm.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "useNewForm", function() { return _useNewForm__WEBPACK_IMPORTED_MODULE_7__["default"]; });
 
 /**
  * `components/index.js` exists simply as a 'central export' for our components.
  * This way, we can import all of our components from the same place, rather than
  * having to figure out which file they belong to!
  */
+// these components are actually working! Mostly.
 
 
 
+ // a separate space to deal with the oscillator...Form component was getting a bit long. Unsuccessful refactor.
 
+ // Haps = what happened; wanted to display a table to display all that tuning math. Unsuccessful.
+
+ // side components from a different React Hooks Forms walkthrough...unsuccessful.
 
 
 
@@ -428,32 +507,34 @@ var jiKeyCalc = function jiKeyCalc(pitch, arr) {
   _classCallCheck(this, jiKeyCalc);
 
   this.base = tonal__WEBPACK_IMPORTED_MODULE_2__["Note"].freq(pitch);
-  this["1P"] = this.base * 1 / 1;
-  this["1A"] = this.base * 25 / 24;
-  this["2d"] = this.base * 128 / 125;
-  this["2m"] = this.base * 17 / 16;
-  this["2M"] = this.base * 9 / 8;
-  this["2A"] = this.base * 75 / 64;
-  this["3d"] = this.base * 256 / 225;
-  this["3m"] = this.base * 6 / 5;
-  this["3M"] = this.base * 5 / 4;
-  this["3A"] = this.base * 125 / 96;
-  this["4d"] = this.base * 32 / 25;
-  this["4P"] = this.base * 4 / 3;
-  this["4A"] = this.base * 45 / 32;
-  this["5d"] = this.base * 64 / 45;
-  this["5P"] = this.base * 3 / 2;
-  this["5A"] = this.base * 25 / 16;
-  this["6d"] = this.base * 192 / 125;
-  this["6m"] = this.base * 8 / 5;
-  this["6M"] = this.base * 5 / 3;
-  this["6A"] = this.base * 225 / 128;
-  this["7d"] = this.base * 128 / 75;
-  this["7m"] = this.base * 9 / 5;
-  this["7M"] = this.base * 16 / 15;
-  this["8d"] = this.base * 48 / 25;
-  this["8P"] = this.base * 2 / 1;
+  this["1P"] = this.base * (1 / 1);
+  this["1A"] = this.base * (25 / 24);
+  this["2d"] = this.base * (128 / 125);
+  this["2m"] = this.base * (17 / 16);
+  this["2M"] = this.base * (9 / 8);
+  this["2A"] = this.base * (75 / 64);
+  this["3d"] = this.base * (256 / 225);
+  this["3m"] = this.base * (6 / 5);
+  this["3M"] = this.base * (5 / 4);
+  this["3A"] = this.base * (125 / 96);
+  this["4d"] = this.base * (32 / 25);
+  this["4P"] = this.base * (4 / 3);
+  this["4A"] = this.base * (45 / 32);
+  this["5d"] = this.base * (64 / 45);
+  this["5P"] = this.base * (3 / 2);
+  this["5A"] = this.base * (25 / 16);
+  this["6d"] = this.base * (192 / 125);
+  this["6m"] = this.base * (8 / 5);
+  this["6M"] = this.base * (5 / 3);
+  this["6A"] = this.base * (225 / 128);
+  this["7d"] = this.base * (128 / 75);
+  this["7m"] = this.base * (9 / 5);
+  this["7M"] = this.base * (16 / 15);
+  this["8d"] = this.base * (48 / 25);
+  this["8P"] = this.base * (2 / 1);
   this.harmony = arr.map(function (voice) {
+    console.log("note of ET array: ", voice, tonal__WEBPACK_IMPORTED_MODULE_2__["Note"].freq(voice), "Hz");
+
     var _int = tonal_distance__WEBPACK_IMPORTED_MODULE_1__["interval"](pitch, voice);
 
     if (_int.charAt(0) === "-") {
@@ -463,6 +544,7 @@ var jiKeyCalc = function jiKeyCalc(pitch, arr) {
       voice = _this[_int];
     }
 
+    console.log("note of JI array: ", voice, "Hz");
     return voice;
   });
 }; // >> END << JI Key Calc
@@ -595,13 +677,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _app__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./app */ "./client/app.js");
 
- // import { Provider } from "react-redux";
-// import store from "./store";
 
 
-react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( // <Provider store={store}>
-react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_app__WEBPACK_IMPORTED_MODULE_2__["default"], null), // </Provider>,
-document.getElementById("app"));
+react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_app__WEBPACK_IMPORTED_MODULE_2__["default"], null), document.getElementById("app"));
 
 /***/ }),
 
@@ -10008,6 +10086,234 @@ module.exports = __webpack_require__(/*! ../modules/_core */ "./node_modules/@ba
 
 /***/ }),
 
+/***/ "./node_modules/@babel/runtime/helpers/extends.js":
+/*!********************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/extends.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function _extends() {
+  module.exports = _extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+
+  return _extends.apply(this, arguments);
+}
+
+module.exports = _extends;
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/inheritsLoose.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/inheritsLoose.js ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function _inheritsLoose(subClass, superClass) {
+  subClass.prototype = Object.create(superClass.prototype);
+  subClass.prototype.constructor = subClass;
+  subClass.__proto__ = superClass;
+}
+
+module.exports = _inheritsLoose;
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/interopRequireDefault.js ***!
+  \**********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : {
+    "default": obj
+  };
+}
+
+module.exports = _interopRequireDefault;
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/interopRequireWildcard.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/interopRequireWildcard.js ***!
+  \***********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function _interopRequireWildcard(obj) {
+  if (obj && obj.__esModule) {
+    return obj;
+  } else {
+    var newObj = {};
+
+    if (obj != null) {
+      for (var key in obj) {
+        if (Object.prototype.hasOwnProperty.call(obj, key)) {
+          var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {};
+
+          if (desc.get || desc.set) {
+            Object.defineProperty(newObj, key, desc);
+          } else {
+            newObj[key] = obj[key];
+          }
+        }
+      }
+    }
+
+    newObj["default"] = obj;
+    return newObj;
+  }
+}
+
+module.exports = _interopRequireWildcard;
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/objectWithoutPropertiesLoose.js":
+/*!*****************************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/objectWithoutPropertiesLoose.js ***!
+  \*****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function _objectWithoutPropertiesLoose(source, excluded) {
+  if (source == null) return {};
+  var target = {};
+  var sourceKeys = Object.keys(source);
+  var key, i;
+
+  for (i = 0; i < sourceKeys.length; i++) {
+    key = sourceKeys[i];
+    if (excluded.indexOf(key) >= 0) continue;
+    target[key] = source[key];
+  }
+
+  return target;
+}
+
+module.exports = _objectWithoutPropertiesLoose;
+
+/***/ }),
+
+/***/ "./node_modules/@restart/context/forwardRef.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/@restart/context/forwardRef.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.default = forwardRef;
+
+var _react = _interopRequireDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function forwardRef(renderFn, _temp) {
+  var _ref = _temp === void 0 ? {} : _temp,
+      propTypes = _ref.propTypes,
+      defaultProps = _ref.defaultProps,
+      _ref$allowFallback = _ref.allowFallback,
+      allowFallback = _ref$allowFallback === void 0 ? false : _ref$allowFallback,
+      _ref$displayName = _ref.displayName,
+      displayName = _ref$displayName === void 0 ? renderFn.name || renderFn.displayName : _ref$displayName;
+
+  var render = function render(props, ref) {
+    return renderFn(props, ref);
+  };
+
+  return Object.assign(_react.default.forwardRef || !allowFallback ? _react.default.forwardRef(render) : function (props) {
+    return render(props, null);
+  }, {
+    displayName: displayName,
+    propTypes: propTypes,
+    defaultProps: defaultProps
+  });
+}
+
+/***/ }),
+
+/***/ "./node_modules/classnames/index.js":
+/*!******************************************!*\
+  !*** ./node_modules/classnames/index.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+  Copyright (c) 2017 Jed Watson.
+  Licensed under the MIT License (MIT), see
+  http://jedwatson.github.io/classnames
+*/
+/* global define */
+
+(function () {
+	'use strict';
+
+	var hasOwn = {}.hasOwnProperty;
+
+	function classNames () {
+		var classes = [];
+
+		for (var i = 0; i < arguments.length; i++) {
+			var arg = arguments[i];
+			if (!arg) continue;
+
+			var argType = typeof arg;
+
+			if (argType === 'string' || argType === 'number') {
+				classes.push(arg);
+			} else if (Array.isArray(arg) && arg.length) {
+				var inner = classNames.apply(null, arg);
+				if (inner) {
+					classes.push(inner);
+				}
+			} else if (argType === 'object') {
+				for (var key in arg) {
+					if (hasOwn.call(arg, key) && arg[key]) {
+						classes.push(key);
+					}
+				}
+			}
+		}
+
+		return classes.join(' ');
+	}
+
+	if ( true && module.exports) {
+		classNames.default = classNames;
+		module.exports = classNames;
+	} else if (true) {
+		// register as 'classnames', consistent with npm package name
+		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = (function () {
+			return classNames;
+		}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	} else {}
+}());
+
+
+/***/ }),
+
 /***/ "./node_modules/object-assign/index.js":
 /*!*********************************************!*\
   !*** ./node_modules/object-assign/index.js ***!
@@ -10245,6 +10551,184 @@ var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
 
 module.exports = ReactPropTypesSecret;
 
+
+/***/ }),
+
+/***/ "./node_modules/react-bootstrap/Table.js":
+/*!***********************************************!*\
+  !*** ./node_modules/react-bootstrap/Table.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js");
+
+exports.__esModule = true;
+exports.default = void 0;
+
+var _extends2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/extends */ "./node_modules/@babel/runtime/helpers/extends.js"));
+
+var _objectWithoutPropertiesLoose2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/objectWithoutPropertiesLoose */ "./node_modules/@babel/runtime/helpers/objectWithoutPropertiesLoose.js"));
+
+var _inheritsLoose2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/inheritsLoose */ "./node_modules/@babel/runtime/helpers/inheritsLoose.js"));
+
+var _classnames = _interopRequireDefault(__webpack_require__(/*! classnames */ "./node_modules/classnames/index.js"));
+
+var _react = _interopRequireDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+var _ThemeProvider = __webpack_require__(/*! ./ThemeProvider */ "./node_modules/react-bootstrap/ThemeProvider.js");
+
+var Table =
+/*#__PURE__*/
+function (_React$Component) {
+  (0, _inheritsLoose2.default)(Table, _React$Component);
+
+  function Table() {
+    return _React$Component.apply(this, arguments) || this;
+  }
+
+  var _proto = Table.prototype;
+
+  _proto.render = function render() {
+    var _this$props = this.props,
+        bsPrefix = _this$props.bsPrefix,
+        className = _this$props.className,
+        striped = _this$props.striped,
+        bordered = _this$props.bordered,
+        borderless = _this$props.borderless,
+        hover = _this$props.hover,
+        size = _this$props.size,
+        variant = _this$props.variant,
+        responsive = _this$props.responsive,
+        props = (0, _objectWithoutPropertiesLoose2.default)(_this$props, ["bsPrefix", "className", "striped", "bordered", "borderless", "hover", "size", "variant", "responsive"]);
+    var classes = (0, _classnames.default)(bsPrefix, className, variant && bsPrefix + "-" + variant, size && bsPrefix + "-" + size, striped && bsPrefix + "-striped", bordered && bsPrefix + "-bordered", borderless && bsPrefix + "-borderless", hover && bsPrefix + "-hover");
+
+    var table = _react.default.createElement("table", (0, _extends2.default)({}, props, {
+      className: classes
+    }));
+
+    if (responsive) {
+      var responsiveClass = bsPrefix + "-responsive";
+
+      if (typeof responsive === 'string') {
+        responsiveClass = responsiveClass + "-" + responsive;
+      }
+
+      return _react.default.createElement("div", {
+        className: responsiveClass
+      }, table);
+    }
+
+    return table;
+  };
+
+  return Table;
+}(_react.default.Component);
+
+var _default = (0, _ThemeProvider.createBootstrapComponent)(Table, 'table');
+
+exports.default = _default;
+module.exports = exports["default"];
+
+/***/ }),
+
+/***/ "./node_modules/react-bootstrap/ThemeProvider.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/react-bootstrap/ThemeProvider.js ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _interopRequireWildcard = __webpack_require__(/*! @babel/runtime/helpers/interopRequireWildcard */ "./node_modules/@babel/runtime/helpers/interopRequireWildcard.js");
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js");
+
+exports.__esModule = true;
+exports.useBootstrapPrefix = useBootstrapPrefix;
+exports.createBootstrapComponent = createBootstrapComponent;
+exports.default = exports.ThemeConsumer = void 0;
+
+var _extends2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/extends */ "./node_modules/@babel/runtime/helpers/extends.js"));
+
+var _inheritsLoose2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/inheritsLoose */ "./node_modules/@babel/runtime/helpers/inheritsLoose.js"));
+
+var _forwardRef = _interopRequireDefault(__webpack_require__(/*! @restart/context/forwardRef */ "./node_modules/@restart/context/forwardRef.js"));
+
+var _react = _interopRequireWildcard(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+var ThemeContext = _react.default.createContext(new Map());
+
+var Consumer = ThemeContext.Consumer,
+    Provider = ThemeContext.Provider;
+exports.ThemeConsumer = Consumer;
+
+var ThemeProvider =
+/*#__PURE__*/
+function (_React$Component) {
+  (0, _inheritsLoose2.default)(ThemeProvider, _React$Component);
+
+  function ThemeProvider() {
+    var _this;
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _React$Component.call.apply(_React$Component, [this].concat(args)) || this;
+    _this.prefixes = new Map();
+    Object.keys(_this.props.prefixes).forEach(function (key) {
+      _this.prefixes.set(key, _this.props.prefixes[key]);
+    });
+    return _this;
+  }
+
+  var _proto = ThemeProvider.prototype;
+
+  _proto.render = function render() {
+    return _react.default.createElement(Provider, {
+      value: this.prefixes
+    }, this.props.children);
+  };
+
+  return ThemeProvider;
+}(_react.default.Component);
+
+function useBootstrapPrefix(prefix, defaultPrefix) {
+  var prefixes = (0, _react.useContext)(ThemeContext);
+  return prefix || prefixes.get(defaultPrefix) || defaultPrefix;
+}
+
+function createBootstrapComponent(Component, opts) {
+  if (typeof opts === 'string') opts = {
+    prefix: opts
+  };
+  var isClassy = Component.prototype && Component.prototype.isReactComponent; // If it's a functional component make sure we don't break it with a ref
+
+  var _opts = opts,
+      prefix = _opts.prefix,
+      _opts$forwardRefAs = _opts.forwardRefAs,
+      forwardRefAs = _opts$forwardRefAs === void 0 ? isClassy ? 'ref' : 'innerRef' : _opts$forwardRefAs;
+  return (0, _forwardRef.default)(function (_ref, ref) {
+    var props = (0, _extends2.default)({}, _ref);
+    props[forwardRefAs] = ref;
+    var prefixes = (0, _react.useContext)(ThemeContext);
+    return _react.default.createElement(Component, (0, _extends2.default)({}, props, {
+      // eslint-disable-next-line react/prop-types
+      bsPrefix: props.bsPrefix || prefixes.get(prefix) || prefix
+    }));
+  }, {
+    displayName: "Bootstrap(" + (Component.displayName || Component.name) + ")"
+  });
+}
+
+var _default = ThemeProvider;
+exports.default = _default;
 
 /***/ }),
 

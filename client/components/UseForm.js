@@ -7,7 +7,9 @@ export const useForm = callback => {
     if (event) {
       event.preventDefault();
     }
-    callback();
+    // this is supposed to live here, per the tutorial...but it's breaking with it!
+    // https://blog.bitsrc.io/using-react-hooks-to-create-awesome-forms-6f846a4ce57
+    // callback();
   };
 
   const handleInputChange = event => {
