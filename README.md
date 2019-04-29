@@ -18,3 +18,8 @@ The biggest bug is getting the audio context to reset; at present, it'll play yo
 Also, the form itself may be too simple; I'm new to React Hooks, so with more time I might have been able to use my form data more effectively and in more components.
 
 # Future Features
+
+* OMR! Optical Music Recognition would eliminate the need for a React Form...I would much rather pull music off the page and hear it right away (e.g., https://www.playscore.co/ but in just intonation instead of equal temperament)
+* be able to play a chord in the "wrong" tuning, too, for comparison!
+* make a table to lay out the data in practical terms ("sing this Bb slightly lower" - though this prescription is largely negligible, because the idea is to get the ear acclimated to "in tune" over time)
+* include an oscillator as seen in this video: https://www.youtube.com/watch?v=6NlI4No3s0M
