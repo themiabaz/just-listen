@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
-const useForm = callback => {
+export const useForm = callback => {
   const [inputs, setInputs] = useState({});
 
   const handleSubmit = event => {
     if (event) {
       event.preventDefault();
     }
+    callback();
   };
 
   const handleInputChange = event => {

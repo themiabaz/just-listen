@@ -90,77 +90,21 @@
 /*!***********************!*\
   !*** ./client/app.js ***!
   \***********************/
-/*! exports provided: default */
+/*! exports provided: App, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "App", function() { return App; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components */ "./client/components/index.js");
 
 
-
 var App = function App() {
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_1__["Form"], null));
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_1__["Home"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_1__["Form"], null));
 };
-
 /* harmony default export */ __webpack_exports__["default"] = (App);
-
-/***/ }),
-
-/***/ "./client/components/CustomHooks.js":
-/*!******************************************!*\
-  !*** ./client/components/CustomHooks.js ***!
-  \******************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
-
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
-
-function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
-
-
-var useForm = function useForm(callback) {
-  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({}),
-      _useState2 = _slicedToArray(_useState, 2),
-      inputs = _useState2[0],
-      setInputs = _useState2[1];
-
-  var handleSubmit = function handleSubmit(event) {
-    if (event) {
-      event.preventDefault();
-    }
-  };
-
-  var handleInputChange = function handleInputChange(event) {
-    event.persist();
-    setInputs(function (inputs) {
-      return _objectSpread({}, inputs, _defineProperty({}, event.target.name, event.target.value));
-    });
-  };
-
-  return {
-    handleSubmit: handleSubmit,
-    handleInputChange: handleInputChange,
-    inputs: inputs
-  };
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (useForm);
 
 /***/ }),
 
@@ -168,111 +112,48 @@ var useForm = function useForm(callback) {
 /*!***********************************!*\
   !*** ./client/components/Form.js ***!
   \***********************************/
-/*! exports provided: default */
+/*! exports provided: Form, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Form", function() { return Form; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var tonal_interval__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tonal-interval */ "./node_modules/tonal-interval/build/es6.js");
-/* harmony import */ var tonal_distance__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tonal-distance */ "./node_modules/tonal-distance/build/es6.js");
-/* harmony import */ var tonal__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! tonal */ "./node_modules/tonal/index.js");
-/* harmony import */ var tone__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! tone */ "./node_modules/tone/build/Tone.js");
-/* harmony import */ var tone__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(tone__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _CustomHooks__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./CustomHooks */ "./client/components/CustomHooks.js");
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+/* harmony import */ var tone__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tone */ "./node_modules/tone/build/Tone.js");
+/* harmony import */ var tone__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(tone__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _UseForm__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./UseForm */ "./client/components/UseForm.js");
+/* harmony import */ var _jiKeyCalc__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./jiKeyCalc */ "./client/components/jiKeyCalc.js");
 
 
 
-
-
-
-
- // >>START<< JI Key Calc
-
-var jiKey = function jiKey(pitch, arr) {
-  var _this = this;
-
-  _classCallCheck(this, jiKey);
-
-  this.base = tonal__WEBPACK_IMPORTED_MODULE_4__["Note"].freq(pitch);
-  this["1P"] = this.base * 1 / 1;
-  this["1A"] = this.base * 25 / 24;
-  this["2d"] = this.base * 128 / 125;
-  this["2m"] = this.base * 17 / 16;
-  this["2M"] = this.base * 9 / 8;
-  this["2A"] = this.base * 75 / 64;
-  this["3d"] = this.base * 256 / 225;
-  this["3m"] = this.base * 6 / 5;
-  this["3M"] = this.base * 5 / 4;
-  this["3A"] = this.base * 125 / 96;
-  this["4d"] = this.base * 32 / 25;
-  this["4P"] = this.base * 4 / 3;
-  this["4A"] = this.base * 45 / 32;
-  this["5d"] = this.base * 64 / 45;
-  this["5P"] = this.base * 3 / 2;
-  this["5A"] = this.base * 25 / 16;
-  this["6d"] = this.base * 192 / 125;
-  this["6m"] = this.base * 8 / 5;
-  this["6M"] = this.base * 5 / 3;
-  this["6A"] = this.base * 225 / 128;
-  this["7d"] = this.base * 128 / 75;
-  this["7m"] = this.base * 9 / 5;
-  this["7M"] = this.base * 16 / 15;
-  this["8d"] = this.base * 48 / 25;
-  this["8P"] = this.base * 2 / 1;
-  this.harmony = arr.map(function (voice) {
-    var _int = tonal_distance__WEBPACK_IMPORTED_MODULE_3__["interval"](pitch, voice);
-
-    if (_int.charAt(0) === "-") {
-      _int = tonal_interval__WEBPACK_IMPORTED_MODULE_2__["invert"](_int.slice(1));
-      voice = _this[_int] / 2;
-    } else {
-      voice = _this[_int];
-    }
-
-    return voice;
-  });
-}; // >> END << JI Key Calc
-// >> START << React Hooks Form Component
-
+ // >> START << React Hooks Form Component
 
 function Form() {
-  var _useForm = Object(_CustomHooks__WEBPACK_IMPORTED_MODULE_6__["default"])(playJI),
-      inputs = _useForm.inputs,
-      handleInputChange = _useForm.handleInputChange,
-      handleSubmit = _useForm.handleSubmit; // >> START << Oscillator Functions //
+  var _UseForm = Object(_UseForm__WEBPACK_IMPORTED_MODULE_2__["default"])(playJI),
+      inputs = _UseForm.inputs,
+      handleInputChange = _UseForm.handleInputChange,
+      handleSubmit = _UseForm.handleSubmit; // >> START << Oscillator Functions //
 
 
   var playJI = function playJI() {
-    var jiNotes = new jiKey(inputs.mel, [inputs.tn, inputs.ld, inputs.br, inputs.bs]);
-    var jiChord = new tone__WEBPACK_IMPORTED_MODULE_5___default.a.PolySynth(4, tone__WEBPACK_IMPORTED_MODULE_5___default.a.Synth).toMaster();
+    // takes the form inputs and performs JI calcs
+    var jiNotes = new _jiKeyCalc__WEBPACK_IMPORTED_MODULE_3__["default"](inputs.mel, [inputs.tn, inputs.ld, inputs.br, inputs.bs]); // create the PolySynth
+
+    var jiChord = new tone__WEBPACK_IMPORTED_MODULE_1___default.a.PolySynth(4, tone__WEBPACK_IMPORTED_MODULE_1___default.a.Synth).toMaster(); // this puts all four voices in the PolySynth
+
     var music = [{
       time: 0,
       note: jiNotes.harmony,
       duration: "1n"
     }];
-    var part = new tone__WEBPACK_IMPORTED_MODULE_5___default.a.Part(function (time, note) {
+    var part = new tone__WEBPACK_IMPORTED_MODULE_1___default.a.Part(function (time, note) {
       //the notes given as the second element in the array
       //will be passed in as the second argument
-      jiChord.triggerAttackRelease(note.note, note.duration, tone__WEBPACK_IMPORTED_MODULE_5___default.a.now());
+      jiChord.triggerAttackRelease(note.note, note.duration, tone__WEBPACK_IMPORTED_MODULE_1___default.a.now());
     }, music).start(0);
-    tone__WEBPACK_IMPORTED_MODULE_5___default.a.Transport.start();
-  }; // function playET() {
-  //   const etNotes = [tn, ld, br, bs];
-  //   const etChord = new Tone.PolySynth(4, Tone.Synth).toMaster();
-  //   const music = [{ time: 0, note: etNotes, duration: "1n" }];
-  //   const part = new Tone.Part(function(time, note) {
-  //     //the notes given as the second element in the array
-  //     //will be passed in as the second argument
-  //     etChord.triggerAttackRelease(note.note, note.duration, Tone.now());
-  //   }, music).start(0);
-  //   Tone.Transport.start();
-  // }
-  // >> END << Oscillator Functions
+    tone__WEBPACK_IMPORTED_MODULE_1___default.a.Transport.start();
+  }; // >> END << Oscillator Functions
   // >> START << Side Effects
   // useEffect(() => {
   //   document.title = oogabooga;
@@ -327,10 +208,153 @@ function Form() {
     type: "submit",
     id: "JI",
     onClick: playJI
-  }, "JI = submit"));
+  }, "tune!"));
+}
+/* harmony default export */ __webpack_exports__["default"] = (Form);
+
+/***/ }),
+
+/***/ "./client/components/Home.js":
+/*!***********************************!*\
+  !*** ./client/components/Home.js ***!
+  \***********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+ // >> START << React Hooks Form Component
+
+function Home() {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "just listen"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "enter pitches below, then press 'tune' to hear it in just intonation"));
 }
 
-/* harmony default export */ __webpack_exports__["default"] = (Form);
+/* harmony default export */ __webpack_exports__["default"] = (Home);
+
+/***/ }),
+
+/***/ "./client/components/NewForm.js":
+/*!**************************************!*\
+  !*** ./client/components/NewForm.js ***!
+  \**************************************/
+/*! exports provided: NewForm, default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NewForm", function() { return NewForm; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _useNewForm__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./useNewForm */ "./client/components/useNewForm.js");
+/* harmony import */ var _playJI__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./playJI */ "./client/components/playJI.js");
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+// this method was unsuccessful, following instructions from: https://rangle.io/blog/simplifying-controlled-inputs-with-hooks/
+
+
+
+function NewForm(props) {
+  var _useNewForm = Object(_useNewForm__WEBPACK_IMPORTED_MODULE_1__["useNewForm"])(""),
+      tn = _useNewForm.value,
+      bindTn = _useNewForm.bind;
+
+  var _useNewForm2 = Object(_useNewForm__WEBPACK_IMPORTED_MODULE_1__["useNewForm"])(""),
+      ld = _useNewForm2.value,
+      bindLd = _useNewForm2.bind;
+
+  var _useNewForm3 = Object(_useNewForm__WEBPACK_IMPORTED_MODULE_1__["useNewForm"])(""),
+      br = _useNewForm3.value,
+      bindBr = _useNewForm3.bind;
+
+  var _useNewForm4 = Object(_useNewForm__WEBPACK_IMPORTED_MODULE_1__["useNewForm"])(""),
+      bs = _useNewForm4.value,
+      bindBs = _useNewForm4.bind;
+
+  var _useNewForm5 = Object(_useNewForm__WEBPACK_IMPORTED_MODULE_1__["useNewForm"])(""),
+      mel = _useNewForm5.value,
+      bindMel = _useNewForm5.bind;
+
+  var handleSubmit = function handleSubmit(evt) {
+    evt.preventDefault();
+    Object(_playJI__WEBPACK_IMPORTED_MODULE_2__["default"])();
+  };
+
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+    onSubmit: handleSubmit
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "tenor:", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", _extends({
+    type: "text"
+  }, bindTn))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "lead:", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", _extends({
+    type: "text"
+  }, bindLd))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "bari:", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", _extends({
+    type: "text"
+  }, bindBr))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "bass:", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", _extends({
+    type: "text"
+  }, bindBs))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "melody:", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", _extends({
+    type: "text"
+  }, bindMel))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    type: "submit",
+    value: "Submit"
+  }));
+}
+/* harmony default export */ __webpack_exports__["default"] = (NewForm);
+
+/***/ }),
+
+/***/ "./client/components/UseForm.js":
+/*!**************************************!*\
+  !*** ./client/components/UseForm.js ***!
+  \**************************************/
+/*! exports provided: useForm, default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "useForm", function() { return useForm; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+var useForm = function useForm(callback) {
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({}),
+      _useState2 = _slicedToArray(_useState, 2),
+      inputs = _useState2[0],
+      setInputs = _useState2[1];
+
+  var handleSubmit = function handleSubmit(event) {
+    if (event) {
+      event.preventDefault();
+    }
+
+    callback();
+  };
+
+  var handleInputChange = function handleInputChange(event) {
+    event.persist();
+    setInputs(function (inputs) {
+      return _objectSpread({}, inputs, _defineProperty({}, event.target.name, event.target.value));
+    });
+  };
+
+  return {
+    handleSubmit: handleSubmit,
+    handleInputChange: handleInputChange,
+    inputs: inputs
+  };
+};
+/* harmony default export */ __webpack_exports__["default"] = (useForm);
 
 /***/ }),
 
@@ -338,20 +362,221 @@ function Form() {
 /*!************************************!*\
   !*** ./client/components/index.js ***!
   \************************************/
-/*! exports provided: Form */
+/*! exports provided: Home, jiKeyCalc, Form, UseForm, NewForm, useNewForm, playJI */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Form__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Form */ "./client/components/Form.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Form", function() { return _Form__WEBPACK_IMPORTED_MODULE_0__["default"]; });
+/* harmony import */ var _Home__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Home */ "./client/components/Home.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Home", function() { return _Home__WEBPACK_IMPORTED_MODULE_0__["default"]; });
+
+/* harmony import */ var _jiKeyCalc__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./jiKeyCalc */ "./client/components/jiKeyCalc.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "jiKeyCalc", function() { return _jiKeyCalc__WEBPACK_IMPORTED_MODULE_1__["default"]; });
+
+/* harmony import */ var _Form__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Form */ "./client/components/Form.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Form", function() { return _Form__WEBPACK_IMPORTED_MODULE_2__["default"]; });
+
+/* harmony import */ var _UseForm__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./UseForm */ "./client/components/UseForm.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "UseForm", function() { return _UseForm__WEBPACK_IMPORTED_MODULE_3__["default"]; });
+
+/* harmony import */ var _NewForm__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./NewForm */ "./client/components/NewForm.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "NewForm", function() { return _NewForm__WEBPACK_IMPORTED_MODULE_4__["default"]; });
+
+/* harmony import */ var _useNewForm__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./useNewForm */ "./client/components/useNewForm.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "useNewForm", function() { return _useNewForm__WEBPACK_IMPORTED_MODULE_5__["default"]; });
+
+/* harmony import */ var _playJI__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./playJI */ "./client/components/playJI.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "playJI", function() { return _playJI__WEBPACK_IMPORTED_MODULE_6__["default"]; });
 
 /**
  * `components/index.js` exists simply as a 'central export' for our components.
  * This way, we can import all of our components from the same place, rather than
  * having to figure out which file they belong to!
  */
- // export { default as Oscillator } from "./Oscillator";
+
+
+
+
+
+
+
+
+/***/ }),
+
+/***/ "./client/components/jiKeyCalc.js":
+/*!****************************************!*\
+  !*** ./client/components/jiKeyCalc.js ***!
+  \****************************************/
+/*! exports provided: jiKeyCalc, default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "jiKeyCalc", function() { return jiKeyCalc; });
+/* harmony import */ var tonal_interval__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tonal-interval */ "./node_modules/tonal-interval/build/es6.js");
+/* harmony import */ var tonal_distance__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tonal-distance */ "./node_modules/tonal-distance/build/es6.js");
+/* harmony import */ var tonal__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tonal */ "./node_modules/tonal/index.js");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+
+
+ // >>START<< JI Key Calc
+
+var jiKeyCalc = function jiKeyCalc(pitch, arr) {
+  var _this = this;
+
+  _classCallCheck(this, jiKeyCalc);
+
+  this.base = tonal__WEBPACK_IMPORTED_MODULE_2__["Note"].freq(pitch);
+  this["1P"] = this.base * 1 / 1;
+  this["1A"] = this.base * 25 / 24;
+  this["2d"] = this.base * 128 / 125;
+  this["2m"] = this.base * 17 / 16;
+  this["2M"] = this.base * 9 / 8;
+  this["2A"] = this.base * 75 / 64;
+  this["3d"] = this.base * 256 / 225;
+  this["3m"] = this.base * 6 / 5;
+  this["3M"] = this.base * 5 / 4;
+  this["3A"] = this.base * 125 / 96;
+  this["4d"] = this.base * 32 / 25;
+  this["4P"] = this.base * 4 / 3;
+  this["4A"] = this.base * 45 / 32;
+  this["5d"] = this.base * 64 / 45;
+  this["5P"] = this.base * 3 / 2;
+  this["5A"] = this.base * 25 / 16;
+  this["6d"] = this.base * 192 / 125;
+  this["6m"] = this.base * 8 / 5;
+  this["6M"] = this.base * 5 / 3;
+  this["6A"] = this.base * 225 / 128;
+  this["7d"] = this.base * 128 / 75;
+  this["7m"] = this.base * 9 / 5;
+  this["7M"] = this.base * 16 / 15;
+  this["8d"] = this.base * 48 / 25;
+  this["8P"] = this.base * 2 / 1;
+  this.harmony = arr.map(function (voice) {
+    var _int = tonal_distance__WEBPACK_IMPORTED_MODULE_1__["interval"](pitch, voice);
+
+    if (_int.charAt(0) === "-") {
+      _int = tonal_interval__WEBPACK_IMPORTED_MODULE_0__["invert"](_int.slice(1));
+      voice = _this[_int] / 2;
+    } else {
+      voice = _this[_int];
+    }
+
+    return voice;
+  });
+}; // >> END << JI Key Calc
+
+/* harmony default export */ __webpack_exports__["default"] = (jiKeyCalc);
+
+/***/ }),
+
+/***/ "./client/components/playJI.js":
+/*!*************************************!*\
+  !*** ./client/components/playJI.js ***!
+  \*************************************/
+/*! exports provided: playJI, default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "playJI", function() { return playJI; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _jiKeyCalc__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./jiKeyCalc */ "./client/components/jiKeyCalc.js");
+/* harmony import */ var tone__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tone */ "./node_modules/tone/build/Tone.js");
+/* harmony import */ var tone__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(tone__WEBPACK_IMPORTED_MODULE_2__);
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+ // >> START << Oscillator Functions //
+
+function playJI() {
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({}),
+      _useState2 = _slicedToArray(_useState, 1),
+      inputs = _useState2[0]; // takes the form inputs and performs JI calcs
+
+
+  var jiNotes = new _jiKeyCalc__WEBPACK_IMPORTED_MODULE_1__["default"](inputs.mel, [inputs.tn, inputs.ld, inputs.br, inputs.bs]); // create the PolySynth
+
+  var jiChord = new tone__WEBPACK_IMPORTED_MODULE_2___default.a.PolySynth(4, tone__WEBPACK_IMPORTED_MODULE_2___default.a.Synth).toMaster(); // this puts all four voices in the PolySynth
+
+  var music = [{
+    time: 0,
+    note: jiNotes.harmony,
+    duration: "1n"
+  }];
+  var part = new tone__WEBPACK_IMPORTED_MODULE_2___default.a.Part(function (time, note) {
+    //the notes given as the second element in the array
+    //will be passed in as the second argument
+    jiChord.triggerAttackRelease(note.note, note.duration, tone__WEBPACK_IMPORTED_MODULE_2___default.a.now());
+  }, music).start(0);
+  tone__WEBPACK_IMPORTED_MODULE_2___default.a.Transport.start();
+} // >> END << Oscillator Functions
+// // Equal Temperament Oscillator
+// function playET() {
+//   const etNotes = [tn, ld, br, bs];
+//   const etChord = new Tone.PolySynth(4, Tone.Synth).toMaster();
+//   const music = [{ time: 0, note: etNotes, duration: "1n" }];
+//   const part = new Tone.Part(function(time, note) {
+//     //the notes given as the second element in the array
+//     //will be passed in as the second argument
+//     etChord.triggerAttackRelease(note.note, note.duration, Tone.now());
+//   }, music).start(0);
+//   Tone.Transport.start();
+// }
+
+/* harmony default export */ __webpack_exports__["default"] = (playJI);
+
+/***/ }),
+
+/***/ "./client/components/useNewForm.js":
+/*!*****************************************!*\
+  !*** ./client/components/useNewForm.js ***!
+  \*****************************************/
+/*! exports provided: useNewForm, default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "useNewForm", function() { return useNewForm; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+// this method was unsuccessful, following instructions from: https://rangle.io/blog/simplifying-controlled-inputs-with-hooks/
+
+var useNewForm = function useNewForm(initialValue) {
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(initialValue),
+      _useState2 = _slicedToArray(_useState, 2),
+      value = _useState2[0],
+      setValue = _useState2[1];
+
+  return {
+    value: value,
+    setValue: setValue,
+    bind: {
+      value: value,
+      onChange: function onChange(event) {
+        setValue(event.target.value);
+      }
+    }
+  };
+};
+/* harmony default export */ __webpack_exports__["default"] = (useNewForm);
 
 /***/ }),
 

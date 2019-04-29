@@ -3,5 +3,10 @@
  * This way, we can import all of our components from the same place, rather than
  * having to figure out which file they belong to!
  */
+export { default as Home } from "./Home";
+export { default as jiKeyCalc } from "./jiKeyCalc";
 export { default as Form } from "./Form";
-// export { default as Oscillator } from "./Oscillator";
+export { default as UseForm } from "./UseForm";
+export { default as NewForm } from "./NewForm";
+export { default as useNewForm } from "./useNewForm";
+export { default as playJI } from "./playJI";
