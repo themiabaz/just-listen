@@ -1,0 +1,24 @@
+language: node_js
+node_js:
+  - node # uses most recent stable node version
+dist: trusty # uses trusty environment
+sudo: false # when on trusty, uses Docker containers for speed
+notifications:
+  email:
+    on_success: change # default: change (only when going from broken to fixed)
+    on_failure: always # default: always (which is annoying, as it should be)
+install:
+  - npm ci # faster, goes only from package-lock
+
+script:
+  - npm test # test the code
+  - npm run build-client # make the bundle
+
+before_deploy:
+  - rm -rf node_modules # omit from the tarball, since we skip cleanup
+deploy:
+  skip_cleanup: true # prevents travis from deleting the build
+  provider: heroku
+  app: just-listen # see README
+  api_key:
+    secure: "aDKf1BevQTq5+OffZ+nyVZtMiHJ+q1Temwt8N6GMl9wotq3G0s+YaYO+kKjCccOhKeHgVa1AkZ40CjNkLtnRBxZ17Ifj8AVuNOsWAhYQAaHyLz0xBpWxyEhIKRlJTT6Yv4TyMttf6L0vWoyvBcduCwEWyUU4dT6qroLl7lLfuqAqmXDLNmYX7wFplP9v6a/Ho5InO1dTpa+npwjanD2x4gfYzStDzP75tBhwnBG4+4onrLmg8Hy31Dnq+fbDFDq8XyqiO94O7iljikjPbrwGrJb53LofPIMdkAaGgqKYgoVTWJdcshJhbZFTErGfgzkl2E6GugMWHnptpvoxoxm5UrdKC4i3LyFmS3P9X/wh79jLTXNojIbbPbOCtDSQ5UnSXzabTJ1uItiXbiSWAuarWCiYKjcM9LF4i1upP6VUj2VIgt7kj0AsqwZ+E6m08ue+9Jy11U7FNIs3Wyr3FnmCgSqopIxC5cf3UTHOgrC8RNL3mseVFQ/HQLKjnEK/hKIP2ZegZ4ANHNx0nsGdSiYsvtbxEkYqxLJFS6uJjmCscjZTgEoXCTw7YsoKBTu0Fsifj/bkosbiP7JmkOJPTwBDDtKF3Dxwo/zeYs8PyjRDI85A5pi3MJNn70uIrJfau5yLYE6sLtZNH72zRnb2AjPhpG4ZMNMBeoaA5C/tTMxBSik=" # see README
