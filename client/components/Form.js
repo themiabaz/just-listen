@@ -2,6 +2,7 @@ import React from "react";
 import Tone from "tone";
 import UseForm from "./UseForm";
 import jiKeyCalc from "./jiKeyCalc";
+import Button from "react-bootstrap/Button";
 
 // export let keyData = {}; // see line 22
 
@@ -68,69 +69,76 @@ export function Form() {
     <div>
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="tn">
-            <small>tenor</small>
-          </label>
           <input
             type="text"
             name="tn"
             onChange={handleInputChange}
             value={inputs.tn}
             required
-          />
+          />{" "}
+          <label htmlFor="tn">
+            <small>tenor</small>
+          </label>
         </div>
         <div>
-          <label htmlFor="ld">
-            <small>lead</small>
-          </label>{" "}
           <input
             type="text"
             name="ld"
             onChange={handleInputChange}
             value={inputs.ld}
             required
-          />
+          />{" "}
+          <label htmlFor="ld">
+            <small>lead</small>
+          </label>
         </div>
         <div>
-          <label htmlFor="br">
-            <small>bari</small>
-          </label>
           <input
             type="text"
             name="br"
             onChange={handleInputChange}
             value={inputs.br}
             required
-          />
+          />{" "}
+          <label htmlFor="br">
+            <small>bari</small>
+          </label>
         </div>
         <div>
-          <label htmlFor="bs">
-            <small>bass</small>
-          </label>
           <input
             type="text"
             name="bs"
             onChange={handleInputChange}
             value={inputs.bs}
             required
-          />
+          />{" "}
+          <label htmlFor="bs">
+            <small>bass</small>
+          </label>
         </div>
         <div>
-          <label htmlFor="mel">
-            <small>melody pitch</small>
-          </label>
           <input
             type="text"
             name="mel"
             onChange={handleInputChange}
             value={inputs.mel}
             required
-          />
+          />{" "}
+          <label htmlFor="mel">
+            <small>melody pitch</small>
+          </label>
         </div>
         <button type="submit" id="JI" onClick={playJI}>
           tune!
         </button>
       </form>
+      <div>
+        <h6>
+          <a href="https://docs.google.com/presentation/d/1UkZoLJMo9CVjXerY49RyHtMeVXi2JTcRXiI3iU96xT0/edit?usp=sharing">
+            Google Slides Presentation documenting my struggles
+          </a>
+        </h6>
+      </div>
     </div>
   );
 }
