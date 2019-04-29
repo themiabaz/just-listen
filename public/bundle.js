@@ -90,6 +90,209 @@
 /*!***********************!*\
   !*** ./client/app.js ***!
   \***********************/
+/*! exports provided: App, default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "App", function() { return App; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components */ "./client/components/index.js");
+
+
+var App = function App() {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_1__["Home"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_1__["Form"], null));
+};
+/* harmony default export */ __webpack_exports__["default"] = (App);
+
+/***/ }),
+
+/***/ "./client/components/Form.js":
+/*!***********************************!*\
+  !*** ./client/components/Form.js ***!
+  \***********************************/
+/*! exports provided: Form, default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Form", function() { return Form; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var tone__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tone */ "./node_modules/tone/build/Tone.js");
+/* harmony import */ var tone__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(tone__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _UseForm__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./UseForm */ "./client/components/UseForm.js");
+/* harmony import */ var _jiKeyCalc__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./jiKeyCalc */ "./client/components/jiKeyCalc.js");
+/* harmony import */ var react_bootstrap_Button__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-bootstrap/Button */ "./node_modules/react-bootstrap/Button.js");
+/* harmony import */ var react_bootstrap_Button__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_bootstrap_Button__WEBPACK_IMPORTED_MODULE_4__);
+
+
+
+
+ // export let keyData = {}; // see line 22
+// >> START << React Hooks Form Component
+
+function Form() {
+  var _UseForm = Object(_UseForm__WEBPACK_IMPORTED_MODULE_2__["default"])(playJI),
+      inputs = _UseForm.inputs,
+      handleInputChange = _UseForm.handleInputChange,
+      handleSubmit = _UseForm.handleSubmit; // >> START << Oscillator Function //
+
+
+  var playJI = function playJI() {
+    // takes the form inputs and performs JI calcs
+    var jiNotes = new _jiKeyCalc__WEBPACK_IMPORTED_MODULE_3__["default"](inputs.mel, [inputs.tn, inputs.ld, inputs.br, inputs.bs]); // poor attempt to use closure when useState wasn't lining up to pass some of the post-calculated form data to another component
+    // keyData = { mel: jiNotes.base, chord: [jiNotes.harmony] };
+    // create the PolySynth
+
+    var jiChord = new tone__WEBPACK_IMPORTED_MODULE_1___default.a.PolySynth(4, tone__WEBPACK_IMPORTED_MODULE_1___default.a.Synth).toMaster(); // this puts all four voices in the PolySynth
+
+    var music = [{
+      time: 0,
+      note: jiNotes.harmony,
+      duration: "1n"
+    }];
+    var part = new tone__WEBPACK_IMPORTED_MODULE_1___default.a.Part(function (time, note) {
+      jiChord.triggerAttackRelease(note.note, note.duration, tone__WEBPACK_IMPORTED_MODULE_1___default.a.now());
+    }, music).start(0); // Wow, these console.log()s straight up broke the program.
+    // I tried putting them right under the jiNotes calculation; also broke. This is probably something I don't understand about React Hooks.
+    // console.log(
+    //   `original frequencies! Tenor: `,
+    //   Tone.freq(inputs.tn),
+    //   `, lead: `,
+    //   Tone.freq(inputs.ld),
+    //   `, baritone: `,
+    //   Tone.freq(inputs.br),
+    //   `bass: `,
+    //   Tone.freq(inputs.bs)
+    // );
+    // console.log(
+    //   `new frequencies! Tenor: `,
+    //   Tone.freq(jiNotes.harmony[0]),
+    //   `, lead: `,
+    //   Tone.freq(jiNotes.harmony[0]),
+    //   `, baritone: `,
+    //   Tone.freq(jiNotes.harmony[0]),
+    //   `bass: `,
+    //   Tone.freq(jiNotes.harmony[0])
+    // );
+
+    tone__WEBPACK_IMPORTED_MODULE_1___default.a.Transport.start();
+  }; // >> END << Oscillator Function //
+  // >> START << Side Effects //
+  // side effects takes the place of componentDidMount, willMount, willUnmount. GENIUS
+  // useEffect(() => { // placeholder
+  //   return something
+  // });
+  // >> END << Side Effects
+  // >> RENDER COMPONENT << //
+
+
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+    onSubmit: handleSubmit
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    type: "text",
+    name: "tn",
+    onChange: handleInputChange,
+    value: inputs.tn,
+    required: true
+  }), " ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+    htmlFor: "tn"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("small", null, "tenor"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    type: "text",
+    name: "ld",
+    onChange: handleInputChange,
+    value: inputs.ld,
+    required: true
+  }), " ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+    htmlFor: "ld"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("small", null, "lead"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    type: "text",
+    name: "br",
+    onChange: handleInputChange,
+    value: inputs.br,
+    required: true
+  }), " ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+    htmlFor: "br"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("small", null, "bari"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    type: "text",
+    name: "bs",
+    onChange: handleInputChange,
+    value: inputs.bs,
+    required: true
+  }), " ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+    htmlFor: "bs"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("small", null, "bass"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    type: "text",
+    name: "mel",
+    onChange: handleInputChange,
+    value: inputs.mel,
+    required: true
+  }), " ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+    htmlFor: "mel"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("small", null, "melody pitch"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    type: "submit",
+    id: "JI",
+    onClick: playJI
+  }, "tune!")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+    href: "https://docs.google.com/presentation/d/1UkZoLJMo9CVjXerY49RyHtMeVXi2JTcRXiI3iU96xT0/edit?usp=sharing"
+  }, "Google Slides Presentation documenting my struggles"))));
+}
+/* harmony default export */ __webpack_exports__["default"] = (Form);
+
+/***/ }),
+
+/***/ "./client/components/Haps.js":
+/*!***********************************!*\
+  !*** ./client/components/Haps.js ***!
+  \***********************************/
+/*! exports provided: Haps, default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Haps", function() { return Haps; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _jiKeyCalc__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./jiKeyCalc */ "./client/components/jiKeyCalc.js");
+/* harmony import */ var tonal__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tonal */ "./node_modules/tonal/index.js");
+/* harmony import */ var react_bootstrap_Table__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-bootstrap/Table */ "./node_modules/react-bootstrap/Table.js");
+/* harmony import */ var react_bootstrap_Table__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react_bootstrap_Table__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _Form__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Form */ "./client/components/Form.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+
+
+function Haps() {
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({}),
+      _useState2 = _slicedToArray(_useState, 1),
+      inputs = _useState2[0]; // >> RENDER COMPONENT <<
+
+
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap_Table__WEBPACK_IMPORTED_MODULE_3___default.a, {
+    striped: true,
+    bordered: true,
+    hover: true
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, "key note: ", inputs.mel, " = ", tonal__WEBPACK_IMPORTED_MODULE_2__["Note"].freq(inputs.mel), "Hz"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "voice part"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "original pitch (ET)"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "new pitch (JI)"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "adjustment required (ET-JI)"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "tenor"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "null"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "null"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "null")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "lead"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "null"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "null"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "null")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "bari"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "null"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "null"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "null")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "bass"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "null"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "null"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "null"))));
+}
+/* harmony default export */ __webpack_exports__["default"] = (Haps);
+
+/***/ }),
+
+/***/ "./client/components/Home.js":
+/*!***********************************!*\
+  !*** ./client/components/Home.js ***!
+  \***********************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -97,27 +300,97 @@
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components */ "./client/components/index.js");
+ // >> START << React Hooks Form Component
 
+function Home() {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    id: "container"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    align: "center"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "just listen"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "enter pitches below, then press 'tune' to hear it in just intonation!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("em", null, "(calculations are available in the console)"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "try:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "E5-C5-G4-C4 (CM)"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "C5-Gb4-Ab4-Eb4 (AbM7) "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Bb4-G4-E4-C#4 (C#d7)"))));
+}
 
-
-var App = function App() {
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_1__["Form"], null));
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (App);
+/* harmony default export */ __webpack_exports__["default"] = (Home);
 
 /***/ }),
 
-/***/ "./client/components/CustomHooks.js":
-/*!******************************************!*\
-  !*** ./client/components/CustomHooks.js ***!
-  \******************************************/
-/*! exports provided: default */
+/***/ "./client/components/NewForm.js":
+/*!**************************************!*\
+  !*** ./client/components/NewForm.js ***!
+  \**************************************/
+/*! exports provided: NewForm, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NewForm", function() { return NewForm; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _useNewForm__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./useNewForm */ "./client/components/useNewForm.js");
+/* harmony import */ var _playJI__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./playJI */ "./client/components/playJI.js");
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+// this method was unsuccessful, following instructions from: https://rangle.io/blog/simplifying-controlled-inputs-with-hooks/
+
+
+
+function NewForm(props) {
+  var _useNewForm = Object(_useNewForm__WEBPACK_IMPORTED_MODULE_1__["useNewForm"])(""),
+      tn = _useNewForm.value,
+      bindTn = _useNewForm.bind;
+
+  var _useNewForm2 = Object(_useNewForm__WEBPACK_IMPORTED_MODULE_1__["useNewForm"])(""),
+      ld = _useNewForm2.value,
+      bindLd = _useNewForm2.bind;
+
+  var _useNewForm3 = Object(_useNewForm__WEBPACK_IMPORTED_MODULE_1__["useNewForm"])(""),
+      br = _useNewForm3.value,
+      bindBr = _useNewForm3.bind;
+
+  var _useNewForm4 = Object(_useNewForm__WEBPACK_IMPORTED_MODULE_1__["useNewForm"])(""),
+      bs = _useNewForm4.value,
+      bindBs = _useNewForm4.bind;
+
+  var _useNewForm5 = Object(_useNewForm__WEBPACK_IMPORTED_MODULE_1__["useNewForm"])(""),
+      mel = _useNewForm5.value,
+      bindMel = _useNewForm5.bind;
+
+  var handleSubmit = function handleSubmit(evt) {
+    evt.preventDefault();
+    Object(_playJI__WEBPACK_IMPORTED_MODULE_2__["default"])();
+  };
+
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+    onSubmit: handleSubmit
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "tenor:", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", _extends({
+    type: "text"
+  }, bindTn))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "lead:", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", _extends({
+    type: "text"
+  }, bindLd))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "bari:", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", _extends({
+    type: "text"
+  }, bindBr))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "bass:", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", _extends({
+    type: "text"
+  }, bindBs))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "melody:", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", _extends({
+    type: "text"
+  }, bindMel))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    type: "submit",
+    value: "Submit"
+  }));
+}
+/* harmony default export */ __webpack_exports__["default"] = (NewForm);
+
+/***/ }),
+
+/***/ "./client/components/UseForm.js":
+/*!**************************************!*\
+  !*** ./client/components/UseForm.js ***!
+  \**************************************/
+/*! exports provided: useForm, default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "useForm", function() { return useForm; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
@@ -133,7 +406,6 @@ function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
-
 var useForm = function useForm(callback) {
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({}),
       _useState2 = _slicedToArray(_useState, 2),
@@ -143,7 +415,10 @@ var useForm = function useForm(callback) {
   var handleSubmit = function handleSubmit(event) {
     if (event) {
       event.preventDefault();
-    }
+    } // this is supposed to live here, per the tutorial...but it's breaking with it!
+    // https://blog.bitsrc.io/using-react-hooks-to-create-awesome-forms-6f846a4ce57
+    // callback();
+
   };
 
   var handleInputChange = function handleInputChange(event) {
@@ -159,178 +434,7 @@ var useForm = function useForm(callback) {
     inputs: inputs
   };
 };
-
 /* harmony default export */ __webpack_exports__["default"] = (useForm);
-
-/***/ }),
-
-/***/ "./client/components/Form.js":
-/*!***********************************!*\
-  !*** ./client/components/Form.js ***!
-  \***********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var tonal_interval__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tonal-interval */ "./node_modules/tonal-interval/build/es6.js");
-/* harmony import */ var tonal_distance__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tonal-distance */ "./node_modules/tonal-distance/build/es6.js");
-/* harmony import */ var tonal__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! tonal */ "./node_modules/tonal/index.js");
-/* harmony import */ var tone__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! tone */ "./node_modules/tone/build/Tone.js");
-/* harmony import */ var tone__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(tone__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _CustomHooks__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./CustomHooks */ "./client/components/CustomHooks.js");
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-
-
-
-
-
-
- // >>START<< JI Key Calc
-
-var jiKey = function jiKey(pitch, arr) {
-  var _this = this;
-
-  _classCallCheck(this, jiKey);
-
-  this.base = tonal__WEBPACK_IMPORTED_MODULE_4__["Note"].freq(pitch);
-  this["1P"] = this.base * 1 / 1;
-  this["1A"] = this.base * 25 / 24;
-  this["2d"] = this.base * 128 / 125;
-  this["2m"] = this.base * 17 / 16;
-  this["2M"] = this.base * 9 / 8;
-  this["2A"] = this.base * 75 / 64;
-  this["3d"] = this.base * 256 / 225;
-  this["3m"] = this.base * 6 / 5;
-  this["3M"] = this.base * 5 / 4;
-  this["3A"] = this.base * 125 / 96;
-  this["4d"] = this.base * 32 / 25;
-  this["4P"] = this.base * 4 / 3;
-  this["4A"] = this.base * 45 / 32;
-  this["5d"] = this.base * 64 / 45;
-  this["5P"] = this.base * 3 / 2;
-  this["5A"] = this.base * 25 / 16;
-  this["6d"] = this.base * 192 / 125;
-  this["6m"] = this.base * 8 / 5;
-  this["6M"] = this.base * 5 / 3;
-  this["6A"] = this.base * 225 / 128;
-  this["7d"] = this.base * 128 / 75;
-  this["7m"] = this.base * 9 / 5;
-  this["7M"] = this.base * 16 / 15;
-  this["8d"] = this.base * 48 / 25;
-  this["8P"] = this.base * 2 / 1;
-  this.harmony = arr.map(function (voice) {
-    var _int = tonal_distance__WEBPACK_IMPORTED_MODULE_3__["interval"](pitch, voice);
-
-    if (_int.charAt(0) === "-") {
-      _int = tonal_interval__WEBPACK_IMPORTED_MODULE_2__["invert"](_int.slice(1));
-      voice = _this[_int] / 2;
-    } else {
-      voice = _this[_int];
-    }
-
-    return voice;
-  });
-}; // >> END << JI Key Calc
-// >> START << React Hooks Form Component
-
-
-function Form() {
-  var _useForm = Object(_CustomHooks__WEBPACK_IMPORTED_MODULE_6__["default"])(playJI),
-      inputs = _useForm.inputs,
-      handleInputChange = _useForm.handleInputChange,
-      handleSubmit = _useForm.handleSubmit; // >> START << Oscillator Functions //
-
-
-  var playJI = function playJI() {
-    var jiNotes = new jiKey(inputs.mel, [inputs.tn, inputs.ld, inputs.br, inputs.bs]);
-    var jiChord = new tone__WEBPACK_IMPORTED_MODULE_5___default.a.PolySynth(4, tone__WEBPACK_IMPORTED_MODULE_5___default.a.Synth).toMaster();
-    var music = [{
-      time: 0,
-      note: jiNotes.harmony,
-      duration: "1n"
-    }];
-    var part = new tone__WEBPACK_IMPORTED_MODULE_5___default.a.Part(function (time, note) {
-      //the notes given as the second element in the array
-      //will be passed in as the second argument
-      jiChord.triggerAttackRelease(note.note, note.duration, tone__WEBPACK_IMPORTED_MODULE_5___default.a.now());
-    }, music).start(0);
-    tone__WEBPACK_IMPORTED_MODULE_5___default.a.Transport.start();
-  }; // function playET() {
-  //   const etNotes = [tn, ld, br, bs];
-  //   const etChord = new Tone.PolySynth(4, Tone.Synth).toMaster();
-  //   const music = [{ time: 0, note: etNotes, duration: "1n" }];
-  //   const part = new Tone.Part(function(time, note) {
-  //     //the notes given as the second element in the array
-  //     //will be passed in as the second argument
-  //     etChord.triggerAttackRelease(note.note, note.duration, Tone.now());
-  //   }, music).start(0);
-  //   Tone.Transport.start();
-  // }
-  // >> END << Oscillator Functions
-  // >> START << Side Effects
-  // useEffect(() => {
-  //   document.title = oogabooga;
-  // });
-  // >> END << Side Effects
-  // >> RENDER COMPONENT <<
-
-
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-    onSubmit: handleSubmit
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-    htmlFor: "tn"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("small", null, "tenor")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-    type: "text",
-    name: "tn",
-    onChange: handleInputChange,
-    value: inputs.tn,
-    required: true
-  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-    htmlFor: "ld"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("small", null, "lead")), " ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-    type: "text",
-    name: "ld",
-    onChange: handleInputChange,
-    value: inputs.ld,
-    required: true
-  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-    htmlFor: "br"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("small", null, "bari")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-    type: "text",
-    name: "br",
-    onChange: handleInputChange,
-    value: inputs.br,
-    required: true
-  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-    htmlFor: "bs"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("small", null, "bass")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-    type: "text",
-    name: "bs",
-    onChange: handleInputChange,
-    value: inputs.bs,
-    required: true
-  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-    htmlFor: "mel"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("small", null, "melody pitch")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-    type: "text",
-    name: "mel",
-    onChange: handleInputChange,
-    value: inputs.mel,
-    required: true
-  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    type: "submit",
-    id: "JI",
-    onClick: playJI
-  }, "JI = submit"));
-}
-
-/* harmony default export */ __webpack_exports__["default"] = (Form);
 
 /***/ }),
 
@@ -338,20 +442,232 @@ function Form() {
 /*!************************************!*\
   !*** ./client/components/index.js ***!
   \************************************/
-/*! exports provided: Form */
+/*! exports provided: Home, jiKeyCalc, Form, UseForm, playJI, Haps, NewForm, useNewForm */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Form__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Form */ "./client/components/Form.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Form", function() { return _Form__WEBPACK_IMPORTED_MODULE_0__["default"]; });
+/* harmony import */ var _Home__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Home */ "./client/components/Home.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Home", function() { return _Home__WEBPACK_IMPORTED_MODULE_0__["default"]; });
+
+/* harmony import */ var _jiKeyCalc__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./jiKeyCalc */ "./client/components/jiKeyCalc.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "jiKeyCalc", function() { return _jiKeyCalc__WEBPACK_IMPORTED_MODULE_1__["default"]; });
+
+/* harmony import */ var _Form__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Form */ "./client/components/Form.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Form", function() { return _Form__WEBPACK_IMPORTED_MODULE_2__["default"]; });
+
+/* harmony import */ var _UseForm__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./UseForm */ "./client/components/UseForm.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "UseForm", function() { return _UseForm__WEBPACK_IMPORTED_MODULE_3__["default"]; });
+
+/* harmony import */ var _playJI__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./playJI */ "./client/components/playJI.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "playJI", function() { return _playJI__WEBPACK_IMPORTED_MODULE_4__["default"]; });
+
+/* harmony import */ var _Haps__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Haps */ "./client/components/Haps.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Haps", function() { return _Haps__WEBPACK_IMPORTED_MODULE_5__["default"]; });
+
+/* harmony import */ var _NewForm__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./NewForm */ "./client/components/NewForm.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "NewForm", function() { return _NewForm__WEBPACK_IMPORTED_MODULE_6__["default"]; });
+
+/* harmony import */ var _useNewForm__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./useNewForm */ "./client/components/useNewForm.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "useNewForm", function() { return _useNewForm__WEBPACK_IMPORTED_MODULE_7__["default"]; });
 
 /**
  * `components/index.js` exists simply as a 'central export' for our components.
  * This way, we can import all of our components from the same place, rather than
  * having to figure out which file they belong to!
  */
- // export { default as Oscillator } from "./Oscillator";
+// these components are actually working! Mostly.
+
+
+
+ // a separate space to deal with the oscillator...Form component was getting a bit long. Unsuccessful refactor.
+
+ // Haps = what happened; wanted to display a table to display all that tuning math. Unsuccessful.
+
+ // side components from a different React Hooks Forms walkthrough...unsuccessful.
+
+
+
+
+/***/ }),
+
+/***/ "./client/components/jiKeyCalc.js":
+/*!****************************************!*\
+  !*** ./client/components/jiKeyCalc.js ***!
+  \****************************************/
+/*! exports provided: jiKeyCalc, default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "jiKeyCalc", function() { return jiKeyCalc; });
+/* harmony import */ var tonal_interval__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tonal-interval */ "./node_modules/tonal-interval/build/es6.js");
+/* harmony import */ var tonal_distance__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tonal-distance */ "./node_modules/tonal-distance/build/es6.js");
+/* harmony import */ var tonal__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tonal */ "./node_modules/tonal/index.js");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+
+
+ // >>START<< JI Key Calc
+
+var jiKeyCalc = function jiKeyCalc(pitch, arr) {
+  var _this = this;
+
+  _classCallCheck(this, jiKeyCalc);
+
+  this.base = tonal__WEBPACK_IMPORTED_MODULE_2__["Note"].freq(pitch);
+  this["1P"] = this.base * (1 / 1);
+  this["1A"] = this.base * (25 / 24);
+  this["2d"] = this.base * (128 / 125);
+  this["2m"] = this.base * (17 / 16);
+  this["2M"] = this.base * (9 / 8);
+  this["2A"] = this.base * (75 / 64);
+  this["3d"] = this.base * (256 / 225);
+  this["3m"] = this.base * (6 / 5);
+  this["3M"] = this.base * (5 / 4);
+  this["3A"] = this.base * (125 / 96);
+  this["4d"] = this.base * (32 / 25);
+  this["4P"] = this.base * (4 / 3);
+  this["4A"] = this.base * (45 / 32);
+  this["5d"] = this.base * (64 / 45);
+  this["5P"] = this.base * (3 / 2);
+  this["5A"] = this.base * (25 / 16);
+  this["6d"] = this.base * (192 / 125);
+  this["6m"] = this.base * (8 / 5);
+  this["6M"] = this.base * (5 / 3);
+  this["6A"] = this.base * (225 / 128);
+  this["7d"] = this.base * (128 / 75);
+  this["7m"] = this.base * (9 / 5);
+  this["7M"] = this.base * (16 / 15);
+  this["8d"] = this.base * (48 / 25);
+  this["8P"] = this.base * (2 / 1);
+  this.harmony = arr.map(function (voice) {
+    console.log("note of ET array: ", voice, tonal__WEBPACK_IMPORTED_MODULE_2__["Note"].freq(voice), "Hz");
+
+    var _int = tonal_distance__WEBPACK_IMPORTED_MODULE_1__["interval"](pitch, voice);
+
+    if (_int.charAt(0) === "-") {
+      _int = tonal_interval__WEBPACK_IMPORTED_MODULE_0__["invert"](_int.slice(1));
+      voice = _this[_int] / 2;
+    } else {
+      voice = _this[_int];
+    }
+
+    console.log("note of JI array: ", voice, "Hz");
+    return voice;
+  });
+}; // >> END << JI Key Calc
+
+/* harmony default export */ __webpack_exports__["default"] = (jiKeyCalc);
+
+/***/ }),
+
+/***/ "./client/components/playJI.js":
+/*!*************************************!*\
+  !*** ./client/components/playJI.js ***!
+  \*************************************/
+/*! exports provided: playJI, default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "playJI", function() { return playJI; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _jiKeyCalc__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./jiKeyCalc */ "./client/components/jiKeyCalc.js");
+/* harmony import */ var tone__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tone */ "./node_modules/tone/build/Tone.js");
+/* harmony import */ var tone__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(tone__WEBPACK_IMPORTED_MODULE_2__);
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+ // >> START << Oscillator Functions //
+
+function playJI() {
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({}),
+      _useState2 = _slicedToArray(_useState, 1),
+      inputs = _useState2[0]; // takes the form inputs and performs JI calcs
+
+
+  var jiNotes = new _jiKeyCalc__WEBPACK_IMPORTED_MODULE_1__["default"](inputs.mel, [inputs.tn, inputs.ld, inputs.br, inputs.bs]); // create the PolySynth
+
+  var jiChord = new tone__WEBPACK_IMPORTED_MODULE_2___default.a.PolySynth(4, tone__WEBPACK_IMPORTED_MODULE_2___default.a.Synth).toMaster(); // this puts all four voices in the PolySynth
+
+  var music = [{
+    time: 0,
+    note: jiNotes.harmony,
+    duration: "1n"
+  }];
+  var part = new tone__WEBPACK_IMPORTED_MODULE_2___default.a.Part(function (time, note) {
+    //the notes given as the second element in the array
+    //will be passed in as the second argument
+    jiChord.triggerAttackRelease(note.note, note.duration, tone__WEBPACK_IMPORTED_MODULE_2___default.a.now());
+  }, music).start(0);
+  tone__WEBPACK_IMPORTED_MODULE_2___default.a.Transport.start();
+} // >> END << Oscillator Functions
+// // Equal Temperament Oscillator
+// function playET() {
+//   const etNotes = [tn, ld, br, bs];
+//   const etChord = new Tone.PolySynth(4, Tone.Synth).toMaster();
+//   const music = [{ time: 0, note: etNotes, duration: "1n" }];
+//   const part = new Tone.Part(function(time, note) {
+//     //the notes given as the second element in the array
+//     //will be passed in as the second argument
+//     etChord.triggerAttackRelease(note.note, note.duration, Tone.now());
+//   }, music).start(0);
+//   Tone.Transport.start();
+// }
+
+/* harmony default export */ __webpack_exports__["default"] = (playJI);
+
+/***/ }),
+
+/***/ "./client/components/useNewForm.js":
+/*!*****************************************!*\
+  !*** ./client/components/useNewForm.js ***!
+  \*****************************************/
+/*! exports provided: useNewForm, default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "useNewForm", function() { return useNewForm; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+// this method was unsuccessful, following instructions from: https://rangle.io/blog/simplifying-controlled-inputs-with-hooks/
+
+var useNewForm = function useNewForm(initialValue) {
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(initialValue),
+      _useState2 = _slicedToArray(_useState, 2),
+      value = _useState2[0],
+      setValue = _useState2[1];
+
+  return {
+    value: value,
+    setValue: setValue,
+    bind: {
+      value: value,
+      onChange: function onChange(event) {
+        setValue(event.target.value);
+      }
+    }
+  };
+};
+/* harmony default export */ __webpack_exports__["default"] = (useNewForm);
 
 /***/ }),
 
@@ -370,13 +686,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _app__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./app */ "./client/app.js");
 
- // import { Provider } from "react-redux";
-// import store from "./store";
 
 
-react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( // <Provider store={store}>
-react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_app__WEBPACK_IMPORTED_MODULE_2__["default"], null), // </Provider>,
-document.getElementById("app"));
+react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_app__WEBPACK_IMPORTED_MODULE_2__["default"], null), document.getElementById("app"));
 
 /***/ }),
 
@@ -9783,6 +10095,253 @@ module.exports = __webpack_require__(/*! ../modules/_core */ "./node_modules/@ba
 
 /***/ }),
 
+/***/ "./node_modules/@babel/runtime/helpers/assertThisInitialized.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/assertThisInitialized.js ***!
+  \**********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function _assertThisInitialized(self) {
+  if (self === void 0) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }
+
+  return self;
+}
+
+module.exports = _assertThisInitialized;
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/extends.js":
+/*!********************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/extends.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function _extends() {
+  module.exports = _extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+
+  return _extends.apply(this, arguments);
+}
+
+module.exports = _extends;
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/inheritsLoose.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/inheritsLoose.js ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function _inheritsLoose(subClass, superClass) {
+  subClass.prototype = Object.create(superClass.prototype);
+  subClass.prototype.constructor = subClass;
+  subClass.__proto__ = superClass;
+}
+
+module.exports = _inheritsLoose;
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/interopRequireDefault.js ***!
+  \**********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : {
+    "default": obj
+  };
+}
+
+module.exports = _interopRequireDefault;
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/interopRequireWildcard.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/interopRequireWildcard.js ***!
+  \***********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function _interopRequireWildcard(obj) {
+  if (obj && obj.__esModule) {
+    return obj;
+  } else {
+    var newObj = {};
+
+    if (obj != null) {
+      for (var key in obj) {
+        if (Object.prototype.hasOwnProperty.call(obj, key)) {
+          var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {};
+
+          if (desc.get || desc.set) {
+            Object.defineProperty(newObj, key, desc);
+          } else {
+            newObj[key] = obj[key];
+          }
+        }
+      }
+    }
+
+    newObj["default"] = obj;
+    return newObj;
+  }
+}
+
+module.exports = _interopRequireWildcard;
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/objectWithoutPropertiesLoose.js":
+/*!*****************************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/objectWithoutPropertiesLoose.js ***!
+  \*****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function _objectWithoutPropertiesLoose(source, excluded) {
+  if (source == null) return {};
+  var target = {};
+  var sourceKeys = Object.keys(source);
+  var key, i;
+
+  for (i = 0; i < sourceKeys.length; i++) {
+    key = sourceKeys[i];
+    if (excluded.indexOf(key) >= 0) continue;
+    target[key] = source[key];
+  }
+
+  return target;
+}
+
+module.exports = _objectWithoutPropertiesLoose;
+
+/***/ }),
+
+/***/ "./node_modules/@restart/context/forwardRef.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/@restart/context/forwardRef.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.default = forwardRef;
+
+var _react = _interopRequireDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function forwardRef(renderFn, _temp) {
+  var _ref = _temp === void 0 ? {} : _temp,
+      propTypes = _ref.propTypes,
+      defaultProps = _ref.defaultProps,
+      _ref$allowFallback = _ref.allowFallback,
+      allowFallback = _ref$allowFallback === void 0 ? false : _ref$allowFallback,
+      _ref$displayName = _ref.displayName,
+      displayName = _ref$displayName === void 0 ? renderFn.name || renderFn.displayName : _ref$displayName;
+
+  var render = function render(props, ref) {
+    return renderFn(props, ref);
+  };
+
+  return Object.assign(_react.default.forwardRef || !allowFallback ? _react.default.forwardRef(render) : function (props) {
+    return render(props, null);
+  }, {
+    displayName: displayName,
+    propTypes: propTypes,
+    defaultProps: defaultProps
+  });
+}
+
+/***/ }),
+
+/***/ "./node_modules/classnames/index.js":
+/*!******************************************!*\
+  !*** ./node_modules/classnames/index.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+  Copyright (c) 2017 Jed Watson.
+  Licensed under the MIT License (MIT), see
+  http://jedwatson.github.io/classnames
+*/
+/* global define */
+
+(function () {
+	'use strict';
+
+	var hasOwn = {}.hasOwnProperty;
+
+	function classNames () {
+		var classes = [];
+
+		for (var i = 0; i < arguments.length; i++) {
+			var arg = arguments[i];
+			if (!arg) continue;
+
+			var argType = typeof arg;
+
+			if (argType === 'string' || argType === 'number') {
+				classes.push(arg);
+			} else if (Array.isArray(arg) && arg.length) {
+				var inner = classNames.apply(null, arg);
+				if (inner) {
+					classes.push(inner);
+				}
+			} else if (argType === 'object') {
+				for (var key in arg) {
+					if (hasOwn.call(arg, key) && arg[key]) {
+						classes.push(key);
+					}
+				}
+			}
+		}
+
+		return classes.join(' ');
+	}
+
+	if ( true && module.exports) {
+		classNames.default = classNames;
+		module.exports = classNames;
+	} else if (true) {
+		// register as 'classnames', consistent with npm package name
+		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = (function () {
+			return classNames;
+		}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	} else {}
+}());
+
+
+/***/ }),
+
 /***/ "./node_modules/object-assign/index.js":
 /*!*********************************************!*\
   !*** ./node_modules/object-assign/index.js ***!
@@ -10020,6 +10579,430 @@ var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
 
 module.exports = ReactPropTypesSecret;
 
+
+/***/ }),
+
+/***/ "./node_modules/react-bootstrap/Button.js":
+/*!************************************************!*\
+  !*** ./node_modules/react-bootstrap/Button.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js");
+
+exports.__esModule = true;
+exports.default = void 0;
+
+var _extends2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/extends */ "./node_modules/@babel/runtime/helpers/extends.js"));
+
+var _objectWithoutPropertiesLoose2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/objectWithoutPropertiesLoose */ "./node_modules/@babel/runtime/helpers/objectWithoutPropertiesLoose.js"));
+
+var _classnames = _interopRequireDefault(__webpack_require__(/*! classnames */ "./node_modules/classnames/index.js"));
+
+var _react = _interopRequireDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+var _ThemeProvider = __webpack_require__(/*! ./ThemeProvider */ "./node_modules/react-bootstrap/ThemeProvider.js");
+
+var _SafeAnchor = _interopRequireDefault(__webpack_require__(/*! ./SafeAnchor */ "./node_modules/react-bootstrap/SafeAnchor.js"));
+
+var defaultProps = {
+  variant: 'primary',
+  active: false,
+  disabled: false,
+  type: 'button'
+};
+
+var Button = _react.default.forwardRef(function (_ref, ref) {
+  var bsPrefix = _ref.bsPrefix,
+      variant = _ref.variant,
+      size = _ref.size,
+      active = _ref.active,
+      className = _ref.className,
+      block = _ref.block,
+      type = _ref.type,
+      as = _ref.as,
+      props = (0, _objectWithoutPropertiesLoose2.default)(_ref, ["bsPrefix", "variant", "size", "active", "className", "block", "type", "as"]);
+  var prefix = (0, _ThemeProvider.useBootstrapPrefix)(bsPrefix, 'btn');
+  var classes = (0, _classnames.default)(className, prefix, active && 'active', prefix + "-" + variant, block && prefix + "-block", size && prefix + "-" + size);
+
+  if (props.href) {
+    return _react.default.createElement(_SafeAnchor.default, (0, _extends2.default)({}, props, {
+      as: as,
+      innerRef: ref,
+      className: (0, _classnames.default)(classes, props.disabled && 'disabled')
+    }));
+  }
+
+  var Component = as || 'button';
+  if (ref) props.ref = ref;
+  return _react.default.createElement(Component, (0, _extends2.default)({}, props, {
+    type: type,
+    className: classes
+  }));
+});
+
+Button.displayName = 'Button';
+Button.defaultProps = defaultProps;
+var _default = Button;
+exports.default = _default;
+module.exports = exports["default"];
+
+/***/ }),
+
+/***/ "./node_modules/react-bootstrap/SafeAnchor.js":
+/*!****************************************************!*\
+  !*** ./node_modules/react-bootstrap/SafeAnchor.js ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js");
+
+exports.__esModule = true;
+exports.default = void 0;
+
+var _extends2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/extends */ "./node_modules/@babel/runtime/helpers/extends.js"));
+
+var _objectWithoutPropertiesLoose2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/objectWithoutPropertiesLoose */ "./node_modules/@babel/runtime/helpers/objectWithoutPropertiesLoose.js"));
+
+var _assertThisInitialized2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/assertThisInitialized */ "./node_modules/@babel/runtime/helpers/assertThisInitialized.js"));
+
+var _inheritsLoose2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/inheritsLoose */ "./node_modules/@babel/runtime/helpers/inheritsLoose.js"));
+
+var _react = _interopRequireDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+var _createChainedFunction = _interopRequireDefault(__webpack_require__(/*! ./utils/createChainedFunction */ "./node_modules/react-bootstrap/utils/createChainedFunction.js"));
+
+var defaultProps = {
+  as: 'a'
+};
+
+function isTrivialHref(href) {
+  return !href || href.trim() === '#';
+}
+/**
+ * There are situations due to browser quirks or Bootstrap CSS where
+ * an anchor tag is needed, when semantically a button tag is the
+ * better choice. SafeAnchor ensures that when an anchor is used like a
+ * button its accessible. It also emulates input `disabled` behavior for
+ * links, which is usually desirable for Buttons, NavItems, DropdownItems, etc.
+ */
+
+
+var SafeAnchor =
+/*#__PURE__*/
+function (_React$Component) {
+  (0, _inheritsLoose2.default)(SafeAnchor, _React$Component);
+
+  function SafeAnchor(props, context) {
+    var _this;
+
+    _this = _React$Component.call(this, props, context) || this;
+    _this.handleClick = _this.handleClick.bind((0, _assertThisInitialized2.default)(_this));
+    _this.handleKeyDown = _this.handleKeyDown.bind((0, _assertThisInitialized2.default)(_this));
+    return _this;
+  }
+
+  var _proto = SafeAnchor.prototype;
+
+  _proto.handleClick = function handleClick(event) {
+    var _this$props = this.props,
+        disabled = _this$props.disabled,
+        href = _this$props.href,
+        onClick = _this$props.onClick;
+
+    if (disabled || isTrivialHref(href)) {
+      event.preventDefault();
+    }
+
+    if (disabled) {
+      event.stopPropagation();
+      return;
+    }
+
+    if (onClick) {
+      onClick(event);
+    }
+  };
+
+  _proto.handleKeyDown = function handleKeyDown(event) {
+    if (event.key === ' ') {
+      event.preventDefault();
+      this.handleClick(event);
+    }
+  };
+
+  _proto.render = function render() {
+    var _this$props2 = this.props,
+        Component = _this$props2.as,
+        disabled = _this$props2.disabled,
+        onKeyDown = _this$props2.onKeyDown,
+        innerRef = _this$props2.innerRef,
+        props = (0, _objectWithoutPropertiesLoose2.default)(_this$props2, ["as", "disabled", "onKeyDown", "innerRef"]);
+
+    if (isTrivialHref(props.href)) {
+      props.role = props.role || 'button'; // we want to make sure there is a href attribute on the node
+      // otherwise, the cursor incorrectly styled (except with role='button')
+
+      props.href = props.href || '#';
+    }
+
+    if (disabled) {
+      props.tabIndex = -1;
+      props['aria-disabled'] = true;
+    }
+
+    if (innerRef) props.ref = innerRef;
+    return _react.default.createElement(Component, (0, _extends2.default)({}, props, {
+      onClick: this.handleClick,
+      onKeyDown: (0, _createChainedFunction.default)(this.handleKeyDown, onKeyDown)
+    }));
+  };
+
+  return SafeAnchor;
+}(_react.default.Component);
+
+SafeAnchor.defaultProps = defaultProps;
+var _default = SafeAnchor;
+exports.default = _default;
+module.exports = exports["default"];
+
+/***/ }),
+
+/***/ "./node_modules/react-bootstrap/Table.js":
+/*!***********************************************!*\
+  !*** ./node_modules/react-bootstrap/Table.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js");
+
+exports.__esModule = true;
+exports.default = void 0;
+
+var _extends2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/extends */ "./node_modules/@babel/runtime/helpers/extends.js"));
+
+var _objectWithoutPropertiesLoose2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/objectWithoutPropertiesLoose */ "./node_modules/@babel/runtime/helpers/objectWithoutPropertiesLoose.js"));
+
+var _inheritsLoose2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/inheritsLoose */ "./node_modules/@babel/runtime/helpers/inheritsLoose.js"));
+
+var _classnames = _interopRequireDefault(__webpack_require__(/*! classnames */ "./node_modules/classnames/index.js"));
+
+var _react = _interopRequireDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+var _ThemeProvider = __webpack_require__(/*! ./ThemeProvider */ "./node_modules/react-bootstrap/ThemeProvider.js");
+
+var Table =
+/*#__PURE__*/
+function (_React$Component) {
+  (0, _inheritsLoose2.default)(Table, _React$Component);
+
+  function Table() {
+    return _React$Component.apply(this, arguments) || this;
+  }
+
+  var _proto = Table.prototype;
+
+  _proto.render = function render() {
+    var _this$props = this.props,
+        bsPrefix = _this$props.bsPrefix,
+        className = _this$props.className,
+        striped = _this$props.striped,
+        bordered = _this$props.bordered,
+        borderless = _this$props.borderless,
+        hover = _this$props.hover,
+        size = _this$props.size,
+        variant = _this$props.variant,
+        responsive = _this$props.responsive,
+        props = (0, _objectWithoutPropertiesLoose2.default)(_this$props, ["bsPrefix", "className", "striped", "bordered", "borderless", "hover", "size", "variant", "responsive"]);
+    var classes = (0, _classnames.default)(bsPrefix, className, variant && bsPrefix + "-" + variant, size && bsPrefix + "-" + size, striped && bsPrefix + "-striped", bordered && bsPrefix + "-bordered", borderless && bsPrefix + "-borderless", hover && bsPrefix + "-hover");
+
+    var table = _react.default.createElement("table", (0, _extends2.default)({}, props, {
+      className: classes
+    }));
+
+    if (responsive) {
+      var responsiveClass = bsPrefix + "-responsive";
+
+      if (typeof responsive === 'string') {
+        responsiveClass = responsiveClass + "-" + responsive;
+      }
+
+      return _react.default.createElement("div", {
+        className: responsiveClass
+      }, table);
+    }
+
+    return table;
+  };
+
+  return Table;
+}(_react.default.Component);
+
+var _default = (0, _ThemeProvider.createBootstrapComponent)(Table, 'table');
+
+exports.default = _default;
+module.exports = exports["default"];
+
+/***/ }),
+
+/***/ "./node_modules/react-bootstrap/ThemeProvider.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/react-bootstrap/ThemeProvider.js ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _interopRequireWildcard = __webpack_require__(/*! @babel/runtime/helpers/interopRequireWildcard */ "./node_modules/@babel/runtime/helpers/interopRequireWildcard.js");
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js");
+
+exports.__esModule = true;
+exports.useBootstrapPrefix = useBootstrapPrefix;
+exports.createBootstrapComponent = createBootstrapComponent;
+exports.default = exports.ThemeConsumer = void 0;
+
+var _extends2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/extends */ "./node_modules/@babel/runtime/helpers/extends.js"));
+
+var _inheritsLoose2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/inheritsLoose */ "./node_modules/@babel/runtime/helpers/inheritsLoose.js"));
+
+var _forwardRef = _interopRequireDefault(__webpack_require__(/*! @restart/context/forwardRef */ "./node_modules/@restart/context/forwardRef.js"));
+
+var _react = _interopRequireWildcard(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+var ThemeContext = _react.default.createContext(new Map());
+
+var Consumer = ThemeContext.Consumer,
+    Provider = ThemeContext.Provider;
+exports.ThemeConsumer = Consumer;
+
+var ThemeProvider =
+/*#__PURE__*/
+function (_React$Component) {
+  (0, _inheritsLoose2.default)(ThemeProvider, _React$Component);
+
+  function ThemeProvider() {
+    var _this;
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _React$Component.call.apply(_React$Component, [this].concat(args)) || this;
+    _this.prefixes = new Map();
+    Object.keys(_this.props.prefixes).forEach(function (key) {
+      _this.prefixes.set(key, _this.props.prefixes[key]);
+    });
+    return _this;
+  }
+
+  var _proto = ThemeProvider.prototype;
+
+  _proto.render = function render() {
+    return _react.default.createElement(Provider, {
+      value: this.prefixes
+    }, this.props.children);
+  };
+
+  return ThemeProvider;
+}(_react.default.Component);
+
+function useBootstrapPrefix(prefix, defaultPrefix) {
+  var prefixes = (0, _react.useContext)(ThemeContext);
+  return prefix || prefixes.get(defaultPrefix) || defaultPrefix;
+}
+
+function createBootstrapComponent(Component, opts) {
+  if (typeof opts === 'string') opts = {
+    prefix: opts
+  };
+  var isClassy = Component.prototype && Component.prototype.isReactComponent; // If it's a functional component make sure we don't break it with a ref
+
+  var _opts = opts,
+      prefix = _opts.prefix,
+      _opts$forwardRefAs = _opts.forwardRefAs,
+      forwardRefAs = _opts$forwardRefAs === void 0 ? isClassy ? 'ref' : 'innerRef' : _opts$forwardRefAs;
+  return (0, _forwardRef.default)(function (_ref, ref) {
+    var props = (0, _extends2.default)({}, _ref);
+    props[forwardRefAs] = ref;
+    var prefixes = (0, _react.useContext)(ThemeContext);
+    return _react.default.createElement(Component, (0, _extends2.default)({}, props, {
+      // eslint-disable-next-line react/prop-types
+      bsPrefix: props.bsPrefix || prefixes.get(prefix) || prefix
+    }));
+  }, {
+    displayName: "Bootstrap(" + (Component.displayName || Component.name) + ")"
+  });
+}
+
+var _default = ThemeProvider;
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/react-bootstrap/utils/createChainedFunction.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/react-bootstrap/utils/createChainedFunction.js ***!
+  \*********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.default = void 0;
+
+/**
+ * Safe chained function
+ *
+ * Will only create a new function if needed,
+ * otherwise will pass back existing functions or null.
+ *
+ * @param {function} functions to chain
+ * @returns {function|null}
+ */
+function createChainedFunction() {
+  for (var _len = arguments.length, funcs = new Array(_len), _key = 0; _key < _len; _key++) {
+    funcs[_key] = arguments[_key];
+  }
+
+  return funcs.filter(function (f) {
+    return f != null;
+  }).reduce(function (acc, f) {
+    if (typeof f !== 'function') {
+      throw new Error('Invalid Argument Type, must only provide functions, undefined, or null.');
+    }
+
+    if (acc === null) return f;
+    return function chainedFunction() {
+      for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+        args[_key2] = arguments[_key2];
+      }
+
+      acc.apply(this, args);
+      f.apply(this, args);
+    };
+  }, null);
+}
+
+var _default = createChainedFunction;
+exports.default = _default;
+module.exports = exports["default"];
 
 /***/ }),
 

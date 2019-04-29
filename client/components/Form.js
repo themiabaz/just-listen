@@ -1,169 +1,145 @@
-import React, { useState, useEffect, useContext } from "react";
-import ReactDOM from "react-dom";
-import * as Interval from "tonal-interval";
-import * as Distance from "tonal-distance";
-import { Note } from "tonal";
+import React from "react";
 import Tone from "tone";
-import useForm from "./CustomHooks";
+import UseForm from "./UseForm";
+import jiKeyCalc from "./jiKeyCalc";
+import Button from "react-bootstrap/Button";
 
-// >>START<< JI Key Calc
-class jiKey {
-  constructor(pitch, arr) {
-    this.base = Note.freq(pitch);
-    this["1P"] = this.base * 1 / 1;
-    this["1A"] = this.base * 25 / 24;
-    this["2d"] = this.base * 128 / 125;
-    this["2m"] = this.base * 17 / 16;
-    this["2M"] = this.base * 9 / 8;
-    this["2A"] = this.base * 75 / 64;
-    this["3d"] = this.base * 256 / 225;
-    this["3m"] = this.base * 6 / 5;
-    this["3M"] = this.base * 5 / 4;
-    this["3A"] = this.base * 125 / 96;
-    this["4d"] = this.base * 32 / 25;
-    this["4P"] = this.base * 4 / 3;
-    this["4A"] = this.base * 45 / 32;
-    this["5d"] = this.base * 64 / 45;
-    this["5P"] = this.base * 3 / 2;
-    this["5A"] = this.base * 25 / 16;
-    this["6d"] = this.base * 192 / 125;
-    this["6m"] = this.base * 8 / 5;
-    this["6M"] = this.base * 5 / 3;
-    this["6A"] = this.base * 225 / 128;
-    this["7d"] = this.base * 128 / 75;
-    this["7m"] = this.base * 9 / 5;
-    this["7M"] = this.base * 16 / 15;
-    this["8d"] = this.base * 48 / 25;
-    this["8P"] = this.base * 2 / 1;
-    this.harmony = arr.map(voice => {
-      let int = Distance.interval(pitch, voice);
-      if (int.charAt(0) === "-") {
-        int = Interval.invert(int.slice(1));
-        voice = this[int] / 2;
-      } else {
-        voice = this[int];
-      }
-      return voice;
-    });
-  }
-}
-// >> END << JI Key Calc
+// export let keyData = {}; // see line 22
 
 // >> START << React Hooks Form Component
-function Form() {
-  const { inputs, handleInputChange, handleSubmit } = useForm(playJI);
+export function Form() {
+  const { inputs, handleInputChange, handleSubmit } = UseForm(playJI);
 
-  // >> START << Oscillator Functions //
+  // >> START << Oscillator Function //
   const playJI = () => {
-    const jiNotes = new jiKey(inputs.mel, [
+    // takes the form inputs and performs JI calcs
+    const jiNotes = new jiKeyCalc(inputs.mel, [
       inputs.tn,
       inputs.ld,
       inputs.br,
       inputs.bs
     ]);
+
+    // poor attempt to use closure when useState wasn't lining up to pass some of the post-calculated form data to another component
+    // keyData = { mel: jiNotes.base, chord: [jiNotes.harmony] };
+
+    // create the PolySynth
     const jiChord = new Tone.PolySynth(4, Tone.Synth).toMaster();
+    // this puts all four voices in the PolySynth
     const music = [{ time: 0, note: jiNotes.harmony, duration: "1n" }];
     const part = new Tone.Part(function(time, note) {
-      //the notes given as the second element in the array
-      //will be passed in as the second argument
       jiChord.triggerAttackRelease(note.note, note.duration, Tone.now());
     }, music).start(0);
+    // Wow, these console.log()s straight up broke the program.
+    // I tried putting them right under the jiNotes calculation; also broke. This is probably something I don't understand about React Hooks.
+    // console.log(
+    //   `original frequencies! Tenor: `,
+    //   Tone.freq(inputs.tn),
+    //   `, lead: `,
+    //   Tone.freq(inputs.ld),
+    //   `, baritone: `,
+    //   Tone.freq(inputs.br),
+    //   `bass: `,
+    //   Tone.freq(inputs.bs)
+    // );
+
+    // console.log(
+    //   `new frequencies! Tenor: `,
+    //   Tone.freq(jiNotes.harmony[0]),
+    //   `, lead: `,
+    //   Tone.freq(jiNotes.harmony[0]),
+    //   `, baritone: `,
+    //   Tone.freq(jiNotes.harmony[0]),
+    //   `bass: `,
+    //   Tone.freq(jiNotes.harmony[0])
+    // );
     Tone.Transport.start();
   };
+  // >> END << Oscillator Function //
 
-  // function playET() {
-  //   const etNotes = [tn, ld, br, bs];
-  //   const etChord = new Tone.PolySynth(4, Tone.Synth).toMaster();
-  //   const music = [{ time: 0, note: etNotes, duration: "1n" }];
-  //   const part = new Tone.Part(function(time, note) {
-  //     //the notes given as the second element in the array
-  //     //will be passed in as the second argument
-  //     etChord.triggerAttackRelease(note.note, note.duration, Tone.now());
-  //   }, music).start(0);
-  //   Tone.Transport.start();
-  // }
-  // >> END << Oscillator Functions
-
-  // >> START << Side Effects
-  // useEffect(() => {
-  //   document.title = oogabooga;
+  // >> START << Side Effects //
+  // side effects takes the place of componentDidMount, willMount, willUnmount. GENIUS
+  // useEffect(() => { // placeholder
+  //   return something
   // });
   // >> END << Side Effects
 
-  // >> RENDER COMPONENT <<
+  // >> RENDER COMPONENT << //
   return (
-    <form onSubmit={handleSubmit}>
+    <div>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <input
+            type="text"
+            name="tn"
+            onChange={handleInputChange}
+            value={inputs.tn}
+            required
+          />{" "}
+          <label htmlFor="tn">
+            <small>tenor</small>
+          </label>
+        </div>
+        <div>
+          <input
+            type="text"
+            name="ld"
+            onChange={handleInputChange}
+            value={inputs.ld}
+            required
+          />{" "}
+          <label htmlFor="ld">
+            <small>lead</small>
+          </label>
+        </div>
+        <div>
+          <input
+            type="text"
+            name="br"
+            onChange={handleInputChange}
+            value={inputs.br}
+            required
+          />{" "}
+          <label htmlFor="br">
+            <small>bari</small>
+          </label>
+        </div>
+        <div>
+          <input
+            type="text"
+            name="bs"
+            onChange={handleInputChange}
+            value={inputs.bs}
+            required
+          />{" "}
+          <label htmlFor="bs">
+            <small>bass</small>
+          </label>
+        </div>
+        <div>
+          <input
+            type="text"
+            name="mel"
+            onChange={handleInputChange}
+            value={inputs.mel}
+            required
+          />{" "}
+          <label htmlFor="mel">
+            <small>melody pitch</small>
+          </label>
+        </div>
+        <button type="submit" id="JI" onClick={playJI}>
+          tune!
+        </button>
+      </form>
       <div>
-        <label htmlFor="tn">
-          <small>tenor</small>
-        </label>
-        <input
-          type="text"
-          name="tn"
-          onChange={handleInputChange}
-          value={inputs.tn}
-          required
-        />
+        <h6>
+          <a href="https://docs.google.com/presentation/d/1UkZoLJMo9CVjXerY49RyHtMeVXi2JTcRXiI3iU96xT0/edit?usp=sharing">
+            Google Slides Presentation documenting my struggles
+          </a>
+        </h6>
       </div>
-      <div>
-        <label htmlFor="ld">
-          <small>lead</small>
-        </label>{" "}
-        <input
-          type="text"
-          name="ld"
-          onChange={handleInputChange}
-          value={inputs.ld}
-          required
-        />
-      </div>
-      <div>
-        <label htmlFor="br">
-          <small>bari</small>
-        </label>
-        <input
-          type="text"
-          name="br"
-          onChange={handleInputChange}
-          value={inputs.br}
-          required
-        />
-      </div>
-      <div>
-        <label htmlFor="bs">
-          <small>bass</small>
-        </label>
-        <input
-          type="text"
-          name="bs"
-          onChange={handleInputChange}
-          value={inputs.bs}
-          required
-        />
-      </div>
-      <div>
-        <label htmlFor="mel">
-          <small>melody pitch</small>
-        </label>
-        <input
-          type="text"
-          name="mel"
-          onChange={handleInputChange}
-          value={inputs.mel}
-          required
-        />
-      </div>
-
-      {/* <button type="submit">Submit</button> */}
-
-      <button type="submit" id="JI" onClick={playJI}>
-        JI = submit
-      </button>
-
-      {/* <button type="button" id="ET" onClick={playET}>
-        ET
-      </button> */}
-    </form>
+    </div>
   );
 }
 
